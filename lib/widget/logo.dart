@@ -7,23 +7,23 @@ class Logo extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
-        Text("My Library   ",
-            style: TextStyle(
-              color: Colors.indigoAccent,
-              fontSize: 60,
-              decorationStyle: TextDecorationStyle.solid,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic
-            )
-        ),
-        Image(
-          image: AssetImage('images/logo.png'),
-          width: 100,
-          height: 100,
-        )
-      ]
+        children: const [
+          Text("My Library   ",
+              style: TextStyle(
+                  color: Colors.indigoAccent,
+                  fontSize: 60,
+                  decorationStyle: TextDecorationStyle.solid,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic
+              )
+          ),
+          Image(
+            image: AssetImage('images/logo.png'),
+            width: 100,
+            height: 100,
+          )
+        ]
     );
   }
-  
+
 }
