@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget{
-  const Logo({Key key}) : super(key: key);
+
+  const Logo(this.color, {Key key}) : super(key: key);
+
+  final Color color;
 
 
   @override
   Widget build(BuildContext context) {
     return Row(
-        children: const [
-          Text("My Library   ",
+        children: [
+          Text("My Library  ",
               style: TextStyle(
-                  color: Colors.indigoAccent,
-                  fontSize: 60,
-                  decorationStyle: TextDecorationStyle.solid,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic
+                color: color,
+                fontSize: 60,
+                fontFamily: 'Pacifico',
+
+
               )
           ),
-          Image(
+          const Image(
             image: AssetImage('images/logo.png'),
             width: 100,
             height: 100,

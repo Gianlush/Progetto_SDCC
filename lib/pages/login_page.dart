@@ -67,7 +67,7 @@ class LoginPageState extends State<LoginPage>{
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Logo(),
+                              const Logo(Colors.indigoAccent),
                               const Text("Welcome Back,",
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
