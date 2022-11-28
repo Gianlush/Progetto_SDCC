@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget{
 
-  const Logo({Key key, this.color}) : super(key: key);
+  const Logo({Key key, @required this.color}) : super(key: key);
 
   final Color color;
 

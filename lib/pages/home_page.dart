@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:frontend_sdcc_flutter/pages/login_page.dart';
 import '../widget/logo.dart';
-import '../main.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -18,13 +16,42 @@ class _HomePageState extends State<HomePage> {
   List<String> checkboxGroupValues3;
   TextEditingController textController;
   Map<String, bool> autori;
+  Map<String, bool> eta;
+  Map<String, bool> genere;
 
   @override
   void initState() {
     super.initState();
     textController = TextEditingController();
     autori = {
+      "Antoine de Saint-Exupéry" : false,
+      "Agatha Christie" : true,
+      "E. L. James" : false,
+      "George R. R. Martin" : true,
+      "Herman Melville" : false,
+      "Italo Calvino" : false,
+      "J. K. Rowling" : true,
+      "J. R. R. Tolkien" : true,
+      "Jules Verne" : true,
+      "Lewis Carroll" : false,
+      "Nelson Mandela" : false,
+      "Stephen King" : true,
+      "Umberto Eco" : false,
+    };
 
+    eta = {
+      "Per bambini (3-10)" : false,
+      "Per ragazzi (11-17)" : false,
+      "Per adulti (18+)" : false
+    };
+
+    genere = {
+      "Autobiografico" : false,
+      "Avventura" : false,
+      "Fantasy" : false,
+      "Giallo" : false,
+      "Horror" : false,
+      "Romanzo" : false,
     };
   }
 
@@ -159,6 +186,44 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Padding(padding: EdgeInsets.fromLTRB(15, 50, 0, 0),
+                      child: Text("Genere",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        width: 175,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                          child: Column(
+                            children:
+                            genere.keys.map((String key) {
+                              return CheckboxListTile(
+                                dense: true,
+                                visualDensity: const VisualDensity(vertical: VisualDensity.minimumDensity),
+                                title: Text(key,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                    )
+                                ),
+                                side: const BorderSide(color: Colors.black),
+                                activeColor: Colors.blueAccent,
+                                value: genere[key],
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    genere[key] = value;
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        )
+                    ),
+                    const Padding(padding: EdgeInsets.fromLTRB(15, 50, 0, 0),
                       child: Text("Autore",
                         style: TextStyle(
                           color: Colors.black,
@@ -168,13 +233,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SizedBox(
-                        width: 150,
+                        width: 175,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                           child: Column(
                             children:
                             autori.keys.map((String key) {
                               return CheckboxListTile(
+                                dense: true,
+                                visualDensity: const VisualDensity(vertical: VisualDensity.minimumDensity),
                                 title: Text(key,
                                     style: const TextStyle(
                                       color: Colors.black,
@@ -193,14 +260,52 @@ class _HomePageState extends State<HomePage> {
                             }).toList(),
                           ),
                         )
+                    ),
+                    const Padding(padding: EdgeInsets.fromLTRB(15, 50, 0, 0),
+                      child: Text("Età",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        width: 175,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                          child: Column(
+                            children:
+                            eta.keys.map((String key) {
+                              return CheckboxListTile(
+                                dense: true,
+                                visualDensity: const VisualDensity(vertical: VisualDensity.minimumDensity),
+                                title: Text(key,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                    )
+                                ),
+                                side: const BorderSide(color: Colors.black),
+                                activeColor: Colors.blueAccent,
+                                value: eta[key],
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    eta[key] = value;
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        )
                     )
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(150, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(200, 0, 0, 0),
                   child: Column(
                     children: const [
-                      Logo()
+                      Logo(color: Colors.black,)
                     ],
                   ),
                 )
