@@ -17,16 +17,21 @@ class _HomePageState extends State<HomePage> {
   List<String> checkboxGroupValues2;
   List<String> checkboxGroupValues3;
   TextEditingController textController;
+  Map<String, bool> autori;
 
   @override
   void initState() {
     super.initState();
     textController = TextEditingController();
+    autori = {
+
+    };
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -44,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         const Padding(
                             padding: EdgeInsets.fromLTRB(10, 10, 0, 35),
-                            child: Logo(Colors.white)
+                            child: Logo(color: Colors.white)
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 0, 60),
@@ -144,12 +149,62 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
-            Container(
-              color: Colors.white,
-              width: 10000,
-              height: 1000,
-              child: Text("ciao"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(padding: EdgeInsets.fromLTRB(15, 50, 0, 0),
+                      child: Text("Autore",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        width: 150,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Column(
+                            children:
+                            autori.keys.map((String key) {
+                              return CheckboxListTile(
+                                title: Text(key,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                    )
+                                ),
+                                side: const BorderSide(color: Colors.black),
+                                activeColor: Colors.blueAccent,
+                                value: autori[key],
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    autori[key] = value;
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        )
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(150, 0, 0, 0),
+                  child: Column(
+                    children: const [
+                      Logo()
+                    ],
+                  ),
+                )
+              ],
             )
           ],
         ),

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'My Library',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: const HomePage(),
     );
   }
 }
