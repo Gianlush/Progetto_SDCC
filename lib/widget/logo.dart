@@ -10,14 +10,13 @@ class Logo extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
         children: [
           Text("My Library  ",
               style: TextStyle(
                 color: color,
                 fontSize: 60,
                 fontFamily: 'Pacifico',
-
-
               )
           ),
           const Image(
