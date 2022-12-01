@@ -25,17 +25,17 @@ class _HomePageState extends State<HomePage> {
     textController = TextEditingController();
     autori = {
       "Antoine de Saint-Exupéry" : false,
-      "Agatha Christie" : true,
+      "Agatha Christie" : false,
       "E. L. James" : false,
-      "George R. R. Martin" : true,
+      "George R. R. Martin" : false,
       "Herman Melville" : false,
       "Italo Calvino" : false,
-      "J. K. Rowling" : true,
-      "J. R. R. Tolkien" : true,
-      "Jules Verne" : true,
+      "J. K. Rowling" : false,
+      "J. R. R. Tolkien" : false,
+      "Jules Verne" : false,
       "Lewis Carroll" : false,
       "Nelson Mandela" : false,
-      "Stephen King" : true,
+      "Stephen King" : false,
       "Umberto Eco" : false,
     };
 
@@ -302,10 +302,15 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   Expanded(
-                    child: Wrap(
-                        children: [
-                          Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),
-                        ]
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(50, 25, 20, 0),
+                      child: Wrap(
+                          spacing: 50,
+                          runSpacing: 30,
+                          children: [
+                            Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),
+                          ]
+                      ),
                     ),
                   )
                 ],
