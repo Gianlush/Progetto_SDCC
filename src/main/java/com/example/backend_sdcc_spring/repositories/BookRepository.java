@@ -12,7 +12,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findBookByAuthorIn(List<String> authors);
 
-    List<Book> findBookByAgeIn(List<Integer> ages);
+    List<Book> findBookByAgeLessThan(int age);
 
     List<Book> findBookByGenreIn(List<String> genres);
 

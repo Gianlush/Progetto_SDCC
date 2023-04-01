@@ -16,4 +16,16 @@ public class BookService {
     public List<Book> showAllBookByNameContaining(String name){
         return bookRepository.findBookByNameContainsIgnoreCase(name);
     }
+
+    public List<Book> showAllBookByAuthorsIn(List<String> authors){
+        return bookRepository.findBookByAuthorIn(authors);
+    }
+
+    public List<Book> showAllBookByGenresIn(List<String> genres){
+        return bookRepository.findBookByGenreIn(genres);
+    }
+
+    public List<Book> showAllBookByAgeLowerThan(int age){
+        return bookRepository.findBookByAgeLessThan(age);
+    }
 }
