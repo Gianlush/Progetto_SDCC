@@ -35,6 +35,8 @@ class RestManager {
         // setting headers
         Map<String, String> headers = Map();
         headers[HttpHeaders.contentTypeHeader] = contentType;
+        headers[HttpHeaders.accessControlAllowOriginHeader] = "*";
+        headers[HttpHeaders.acceptHeader] = "*/*";
         if ( token != null ) {
           headers[HttpHeaders.authorizationHeader] = 'bearer $token';
         }
@@ -72,6 +74,7 @@ class RestManager {
         }*/
         return response.body;
       } catch(err) {
+        print(uri);
         print(err);
         await Future.delayed(const Duration(seconds: 1), () => null); // not the best solution
       }
@@ -82,7 +85,7 @@ class RestManager {
     return _makeRequest(serverAddress, servicePath, "post", type, body: value);
   }
 
-  Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
+  Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type = TypeHeader.json]) async {
     return _makeRequest(serverAddress, servicePath, "get", type, value: value);
   }
 

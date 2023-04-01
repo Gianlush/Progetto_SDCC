@@ -5,6 +5,8 @@ import 'package:frontend_sdcc_flutter/utility/Constants.dart';
 import 'package:frontend_sdcc_flutter/utility/LogInResult.dart';
 import 'package:frontend_sdcc_flutter/utility/RestManager.dart';
 
+funzimport '../object/Book.dart';
+
 
 
 class Model {
@@ -14,7 +16,7 @@ class Model {
   AuthenticationData _authenticationData;
 
 
-  Future<LogInResult> logIn(String email, String password) async {
+  /*Future<LogInResult> logIn(String email, String password) async {
     try{
       Map<String, String> params = Map();
       params["grant_type"] = "password";
@@ -47,9 +49,9 @@ class Model {
       print(e);
       return LogInResult.error_unknown;
     }
-  }
+  }*/
 
-  Future<bool> _refreshToken() async {
+/*  Future<bool> _refreshToken() async {
     try {
       Map<String, String> params = Map();
       params["grant_type"] = "refresh_token";
@@ -72,7 +74,7 @@ class Model {
       print(e);
       return false;
     }
-  }
+  }*/
 
   Future<bool> logOut() async {
     try{
@@ -89,19 +91,11 @@ class Model {
     }
   }
 
-  Future<List<Game>> searchGame({String value="",String type="name", int pageNumber, int pageSize=7, String sortBy="name"}) async {
+  Future<List<Book>> searchBookByName({String name=""}) async {
     Map<String, String> params = Map();
-    params[type] = value;
-    params["pageNumber"] = pageNumber.toString();
-    params["pageSize"] = pageSize.toString();
-    params["sortBy"] = sortBy;
-    String REQUEST;
-    if(type == "genre")
-      REQUEST = Constants.REQUEST_SEARCH_BY_GENRE;
-    else
-      REQUEST = Constants.REQUEST_SEARCH_BY_NAME;
+    params["name"] = name;
     try {
-      return List<Game>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, REQUEST, params)).map((i) => Game.fromJson(i)).toList());
+      return List<Book>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK, params)).map((i) => Book.fromJson(i)).toList());
     }
     catch (e) {
       print(e);
@@ -109,6 +103,39 @@ class Model {
     }
   }
 
+  Future<List<Book>> searchBookByAuthorsIn({List<String> authors = const <String>[]}) async {
+    try {
+      return List<Book>.from(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_AUTHORS, authors)).map((i) => Book.fromJson(i)).toList());
+    }
+    catch (e) {
+      print(e);
+      return null; // not the best solution
+    }
+  }
+
+  Future<List<Book>> searchBookByAgeLowerThan({int age = 0}) async {
+    Map<String, String> params = Map();
+    params["age"] = age.toString();
+    try {
+      return List<Book>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_AGE, params)).map((i) => Book.fromJson(i)).toList());
+    }
+    catch (e) {
+      print(e);
+      return null; // not the best solution
+    }
+  }
+
+
+  Future<List<Book>> searchBookByGenresIn({List<String> genres = const <String>[]}) async {
+    try {
+      return List<Book>.from(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_GENRES, genres)).map((i) => Book.fromJson(i)).toList());
+    }
+    catch (e) {
+      print(e);
+      return null; // not the best solution
+    }
+  }
+/*
   Future<Order> createOrder(Order order) async {
     try {
       String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_GET_OR_CREATE_ORDER, order);
@@ -155,6 +182,6 @@ class Model {
       print(e);
       return null; // not the best solution
     }
-  }
+  }*/
 
 }

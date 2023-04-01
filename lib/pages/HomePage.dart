@@ -1,6 +1,11 @@
 
 import 'package:flutter/material.dart';
-import '../widget/logo.dart';
+import 'package:frontend_sdcc_flutter/object/Book.dart';
+import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
+import 'package:frontend_sdcc_flutter/widget/BookCover.dart';
+import '../object/User.dart';
+import '../utility/Model.dart';
+import '../widget/Logo.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -11,29 +16,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> checkboxGroupValues1;
-  List<String> checkboxGroupValues2;
-  List<String> checkboxGroupValues3;
   TextEditingController textController;
   Map<String, bool> autori;
+  List<String> autoriSelezionati;
+  List<String> generiSelezionati;
+  List<int> etaSelezionate;
   Map<String, bool> eta;
   Map<String, bool> genere;
+  List<Book> books = [];
+  User userLogged;
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    textController = TextEditingController(text: "");
+    search();
+    userLogged = null;
+    autoriSelezionati = [];
+    etaSelezionate = [];
+    generiSelezionati = [];
+
     autori = {
       "Antoine de Saint-Exupéry" : false,
       "Agatha Christie" : false,
+      "Alda Merini" : false,
+      "Antonio Gramsci" : false,
+      "Barack Obama" : false,
+      "Christina Lamb" : false,
       "E. L. James" : false,
       "George R. R. Martin" : false,
+      "Gino Strada" : false,
       "Herman Melville" : false,
-      "Italo Calvino" : false,
       "J. K. Rowling" : false,
       "J. R. R. Tolkien" : false,
       "Jules Verne" : false,
-      "Lewis Carroll" : false,
       "Nelson Mandela" : false,
       "Stephen King" : false,
       "Umberto Eco" : false,
@@ -81,16 +97,16 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 60),
                             child: RawMaterialButton(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white)),
-                              padding: const EdgeInsets.fromLTRB(8,0,5,0),
-                              onPressed: search(),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.blue, width: 2)),
+                              padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                              onPressed: () => logout(),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: const [
                                   Text("Logout",
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 20
+                                        fontSize: 25
                                     ),
                                   ),
                                   Padding(
@@ -155,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                             Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                                 child: RawMaterialButton(
-                                    onPressed: search(),
+                                    onPressed: () => search(),
                                     padding: const EdgeInsets.fromLTRB(30,10,30,10),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                     fillColor: Colors.indigo,
@@ -213,11 +229,7 @@ class _HomePageState extends State<HomePage> {
                                   side: const BorderSide(color: Colors.black),
                                   activeColor: Colors.blueAccent,
                                   value: genere[key],
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      genere[key] = value;
-                                    });
-                                  },
+                                  onChanged: (bool value) => genreCheck(value,key),
                                 );
                               }).toList(),
                             ),
@@ -251,11 +263,7 @@ class _HomePageState extends State<HomePage> {
                                   side: const BorderSide(color: Colors.black),
                                   activeColor: Colors.blueAccent,
                                   value: autori[key],
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      autori[key] = value;
-                                    });
-                                  },
+                                  onChanged: (bool value) => authorsCheck(value,key),
                                 );
                               }).toList(),
                             ),
@@ -289,11 +297,7 @@ class _HomePageState extends State<HomePage> {
                                   side: const BorderSide(color: Colors.black),
                                   activeColor: Colors.blueAccent,
                                   value: eta[key],
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      eta[key] = value;
-                                    });
-                                  },
+                                  onChanged: (bool value) => ageCheck(value,key),
                                 );
                               }).toList(),
                             ),
@@ -307,9 +311,9 @@ class _HomePageState extends State<HomePage> {
                       child: Wrap(
                           spacing: 50,
                           runSpacing: 30,
-                          children: [
-                            Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),Logo(color: Colors.red,),
-                          ]
+                          children: books.map((Book key) {
+                            return BookCover(title: key.toString());
+                          }).toList(),
                       ),
                     ),
                   )
@@ -322,7 +326,81 @@ class _HomePageState extends State<HomePage> {
   }
 
   search(){
+    Model.sharedInstance.searchBookByName(name:textController.text).then((value) {
+      setState(() {
+        books = value;
+      });
+    });
+  }
 
+  logout(){
+    setState(() {
+      userLogged = null;
+    });
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const LoginPage()));
+  }
+
+  authorsCheck(bool value, String key) {
+    setState(() {
+      autori[key] = value;
+      if(value) {
+        autoriSelezionati.add(key);
+      } else {
+        autoriSelezionati.remove(key);
+      }
+    });
+    Model.sharedInstance.searchBookByAuthorsIn(authors: autoriSelezionati).then((value) {
+      setState(() {
+        books = value;
+      });
+    });
+  }
+
+
+  ageCheck(bool value, String key) {
+    Map<String, int> mappa = {
+      "Per bambini (3-10)" : 11,
+      "Per ragazzi (11-17)" : 18,
+      "Per adulti (18+)" : 99
+    };
+    setState(() {
+      eta[key] = value;
+      if(value) {
+        etaSelezionate.add(mappa[key]);
+      } else {
+        etaSelezionate.remove(mappa[key]);
+      }
+    });
+
+    int max = 0;
+    for(int age in etaSelezionate) {
+      if(age > max) {
+        max=age;
+      }
+    }
+
+    Model.sharedInstance.searchBookByAgeLowerThan(age: max).then((value) {
+      setState(() {
+        books = value;
+      });
+    });
+  }
+
+
+  genreCheck(bool value, String key) {
+    setState(() {
+      genere[key] = value;
+      if(value) {
+        generiSelezionati.add(key);
+      } else {
+        generiSelezionati.remove(key);
+      }
+    });
+    Model.sharedInstance.searchBookByGenresIn(genres: generiSelezionati).then((value) {
+      setState(() {
+        books = value;
+      });
+    });
   }
 
 }
