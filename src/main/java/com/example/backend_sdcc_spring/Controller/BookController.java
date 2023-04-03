@@ -30,9 +30,9 @@ public class BookController {
         return bookService.showAllBookByGenresIn(genres);
     }
 
-    @GetMapping("/age")
-    public List<Book> getByAgeLowerThan(String age){
-        return bookService.showAllBookByAgeLowerThan(Integer.parseInt(age));
+    @PostMapping("/age")
+    public List<Book> getByAgeInAgeIn(@RequestBody List<String> age){
+        return bookService.showAllBookByInAgeIn(age);
     }
 
 }

@@ -15,7 +15,7 @@ import lombok.ToString;
 @Table(name = "user", schema = "my_library")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -31,5 +31,9 @@ public class User {
     @Basic
     @Column(name = "email")
     private String email;
+
+    @Basic
+    @Column(name = "password")
+    private String password;
 
 }

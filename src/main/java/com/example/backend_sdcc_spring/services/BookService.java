@@ -25,7 +25,7 @@ public class BookService {
         return bookRepository.findBookByGenreIn(genres);
     }
 
-    public List<Book> showAllBookByAgeLowerThan(int age){
-        return bookRepository.findBookByAgeLessThan(age);
+    public List<Book> showAllBookByInAgeIn(List<String> ages){
+        return bookRepository.findBookByAgeIn(ages);
     }
 }

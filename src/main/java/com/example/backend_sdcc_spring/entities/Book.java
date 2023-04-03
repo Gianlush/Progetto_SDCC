@@ -33,7 +33,7 @@ public class Book {
 
     @Basic
     @Column(name = "age")
-    private int age;
+    private String age;
 
 
     @Basic
