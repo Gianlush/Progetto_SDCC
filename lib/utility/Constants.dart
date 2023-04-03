@@ -14,8 +14,8 @@ class Constants{
   static const String ADDRESS_AUTHENTICATION_SERVER = "localhost:8080";
   static const String ADDRESS_STORE_SERVER = "localhost:8081";
 
-  static const String REQUEST_LOGIN = "/auth/realms/$REALM/protocol/openid-connect/token";
-  static const String REQUEST_LOGOUT = "/auth/realms/$REALM/protocol/openid-connect/logout";
+  static const String REQUEST_LOGIN = "/user/login";
+  static const String REQUEST_SIGNUP = "/user/register";
 
   static const String REQUEST_SEARCH_BOOK = "/books";
   static const String REQUEST_SEARCH_BOOK_BY_AUTHORS = "/books/authors";

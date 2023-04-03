@@ -1,98 +1,44 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:frontend_sdcc_flutter/utility/AuthenticationData.dart';
 import 'package:frontend_sdcc_flutter/utility/Constants.dart';
-import 'package:frontend_sdcc_flutter/utility/LogInResult.dart';
 import 'package:frontend_sdcc_flutter/utility/RestManager.dart';
-
-funzimport '../object/Book.dart';
+import 'package:hash_password/password_hasher.dart';
+import 'package:crypto/crypto.dart';
+import '../object/Book.dart';
+import '../object/User.dart';
 
 
 
 class Model {
   static Model sharedInstance = Model();
 
-  RestManager _restManager = RestManager();
-  AuthenticationData _authenticationData;
+  final RestManager _restManager = RestManager();
 
-
-  /*Future<LogInResult> logIn(String email, String password) async {
-    try{
-      Map<String, String> params = Map();
-      params["grant_type"] = "password";
-      params["client_id"] = Constants.CLIENT_ID;
-      params["username"] = email;
-      params["password"] = password;
-      String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
-      _authenticationData = AuthenticationData.fromJson(jsonDecode(result));
-      if ( _authenticationData.hasError() ) {
-        if ( _authenticationData.error == "Invalid user credentials" ) {
-          return LogInResult.error_wrong_credentials;
-        }
-        else if ( _authenticationData.error == "Account is not fully set up" ) {
-          return LogInResult.error_not_fully_setupped;
-        }
-        else {
-          return LogInResult.error_unknown;
-        }
-      }
-      _restManager.token = _authenticationData.accessToken;
-      print("token last: "+_authenticationData.expiresIn.toString());
-      Timer.periodic(Duration(seconds: (30)), (Timer t) async {
-        bool refresh = await _refreshToken();
-        if(!refresh)
-          t.cancel();
-      });
-      return LogInResult.logged;
-    }
-    catch (e) {
-      print(e);
-      return LogInResult.error_unknown;
-    }
-  }*/
-
-/*  Future<bool> _refreshToken() async {
+  Future<User> login(String email, String password) async {
+    Map<String,String> params = {};
+    params['email'] = email;
+    params['password'] = sha256.convert(utf8.encode(password)).toString();
     try {
-      Map<String, String> params = Map();
-      params["grant_type"] = "refresh_token";
-      params["client_id"] = Constants.CLIENT_ID;
-      params["refresh_token"] = _authenticationData.refreshToken;
-      String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
-      _authenticationData = AuthenticationData.fromJson(jsonDecode(result));
-      if ( _authenticationData.hasError() ) {
-        AccountPageState.forceLogout();
-        print("refresh failed");
-        return false;
-      }
-      _restManager.token = _authenticationData.accessToken;
-      print("token refreshed");
-      return true;
+      return User.fromJson(jsonDecode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded)));
     }
-    catch (e) {
-      AccountPageState.forceLogout();
-      print("refresh failed");
+    catch(e){
       print(e);
-      return false;
+      return null;
     }
-  }*/
+  }
 
-  Future<bool> logOut() async {
-    try{
-      Map<String, String> params = Map();
-      _restManager.token = null;
-      params["client_id"] = Constants.CLIENT_ID;
-      params["refresh_token"] = _authenticationData.refreshToken;
-      await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGOUT, params, type: TypeHeader.urlencoded);
-      return true;
+  Future<User> signup(User user) async {
+    try {
+      return User.fromJson(jsonDecode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SIGNUP, user)));
     }
-    catch (e) {
+    catch(e){
       print(e);
-      return false;
+      return null;
     }
   }
 
   Future<List<Book>> searchBookByName({String name=""}) async {
-    Map<String, String> params = Map();
+    Map<String, String> params = {};
     params["name"] = name;
     try {
       return List<Book>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK, params)).map((i) => Book.fromJson(i)).toList());
@@ -113,11 +59,9 @@ class Model {
     }
   }
 
-  Future<List<Book>> searchBookByAgeLowerThan({int age = 0}) async {
-    Map<String, String> params = Map();
-    params["age"] = age.toString();
+  Future<List<Book>> searchBookByAge({List<String> ages}) async {
     try {
-      return List<Book>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_AGE, params)).map((i) => Book.fromJson(i)).toList());
+      return List<Book>.from(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_AGE, ages)).map((i) => Book.fromJson(i)).toList());
     }
     catch (e) {
       print(e);
@@ -135,53 +79,5 @@ class Model {
       return null; // not the best solution
     }
   }
-/*
-  Future<Order> createOrder(Order order) async {
-    try {
-      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_GET_OR_CREATE_ORDER, order);
-      Order result = Order.fromJson(jsonDecode(rawResult));
-      return result;
-    } catch(e){
-      print(e);
-      return null;
-    }
-  }
-
-  Future<User> getUserByEmail(User user) async{
-    try{
-      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_USER_BY_EMAIL,user);
-      return User.fromJson(jsonDecode(rawResult));
-    } catch(e){
-      print(e);
-      return null;
-    }
-  }
-
-  Future<List<Order>> searchOrder(User user) async {
-    try {
-      Map<String, String> params = Map();
-      params["user"] = user.id.toString();
-      return List<Order>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_GET_OR_CREATE_ORDER, params)).map((i) => Order.fromJson(i)).toList());
-    } catch(e){
-      print(e);
-      return null;
-    }
-  }
-
-  Future<User> addUserDB(User user) async {
-    try {
-      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER, user);
-      if ( rawResult.contains(Constants.RESPONSE_ERROR_MAIL_ALREADY_EXIST) ) {
-        return null; // not the best solution
-      }
-      else {
-        return User.fromJson(jsonDecode(rawResult));
-      }
-    }
-    catch (e) {
-      print(e);
-      return null; // not the best solution
-    }
-  }*/
 
 }

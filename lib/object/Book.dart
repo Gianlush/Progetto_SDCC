@@ -2,7 +2,7 @@ class Book {
   int id;
   String name;
   String genre;
-  int age;
+  String age;
   String author;
 
 

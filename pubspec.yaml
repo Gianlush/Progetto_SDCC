@@ -10,6 +10,8 @@ environment:
 
 dependencies:
   google_fonts: 4.0.3
+  hash_password: ^0.0.3
+  crypto: ^3.0.2
 
   flutter:
     sdk: flutter

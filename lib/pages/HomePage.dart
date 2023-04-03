@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend_sdcc_flutter/object/Book.dart';
 import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
@@ -9,7 +8,9 @@ import '../widget/Logo.dart';
 
 class HomePage extends StatefulWidget {
 
-  const HomePage({Key key}) : super(key: key);
+  static User userLogged;
+
+  HomePage({Key key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,18 +21,17 @@ class _HomePageState extends State<HomePage> {
   Map<String, bool> autori;
   List<String> autoriSelezionati;
   List<String> generiSelezionati;
-  List<int> etaSelezionate;
+  List<String> etaSelezionate;
   Map<String, bool> eta;
   Map<String, bool> genere;
   List<Book> books = [];
-  User userLogged;
+
 
   @override
   void initState() {
     super.initState();
     textController = TextEditingController(text: "");
     search();
-    userLogged = null;
     autoriSelezionati = [];
     etaSelezionate = [];
     generiSelezionati = [];
@@ -307,7 +307,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(50, 25, 20, 0),
+                      padding: const EdgeInsets.fromLTRB(50, 25, 20, 0),
                       child: Wrap(
                           spacing: 50,
                           runSpacing: 30,
@@ -335,7 +335,7 @@ class _HomePageState extends State<HomePage> {
 
   logout(){
     setState(() {
-      userLogged = null;
+      HomePage.userLogged = null;
     });
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const LoginPage()));
   }
@@ -358,30 +358,17 @@ class _HomePageState extends State<HomePage> {
 
 
   ageCheck(bool value, String key) {
-    Map<String, int> mappa = {
-      "Per bambini (3-10)" : 11,
-      "Per ragazzi (11-17)" : 18,
-      "Per adulti (18+)" : 99
-    };
     setState(() {
       eta[key] = value;
       if(value) {
-        etaSelezionate.add(mappa[key]);
+        etaSelezionate.add(key);
       } else {
-        etaSelezionate.remove(mappa[key]);
+        etaSelezionate.remove(key);
       }
     });
-
-    int max = 0;
-    for(int age in etaSelezionate) {
-      if(age > max) {
-        max=age;
-      }
-    }
-
-    Model.sharedInstance.searchBookByAgeLowerThan(age: max).then((value) {
+    Model.sharedInstance.searchBookByAge(ages: etaSelezionate).then((response) {
       setState(() {
-        books = value;
+        books = response;
       });
     });
   }

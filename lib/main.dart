@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sdcc_flutter/pages/HomePage.dart';
 import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
 
 void main() {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'My Library',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }

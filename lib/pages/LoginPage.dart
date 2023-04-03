@@ -1,5 +1,11 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend_sdcc_flutter/pages/HomePage.dart';
 import 'package:frontend_sdcc_flutter/widget/Logo.dart';
+import '../object/User.dart';
+import '../utility/Model.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -10,7 +16,6 @@ class LoginPage extends StatefulWidget {
     return LoginPageState();
   }
 }
-
 class LoginPageState extends State<LoginPage>{
 
   TextEditingController emailAddressController;
@@ -33,10 +38,11 @@ class LoginPageState extends State<LoginPage>{
 
   @override
   Widget build(BuildContext context) {
-    if(logging)
+    if(logging) {
       return LoginView();
-    else
+    } else {
       return SignUpView();
+    }
   }
 
   Widget LoginView(){
@@ -118,59 +124,12 @@ class LoginPageState extends State<LoginPage>{
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-                                child: TextFormField(
-                                  controller: passwordController,
-                                  style: const TextStyle(
-                                      color: Colors.black
-                                  ),
-                                  obscureText: !passwordVisibility,
-                                  decoration: InputDecoration(
-                                    labelStyle: const TextStyle(
-                                      color: Colors.black54,
-                                    ),
-                                    labelText: 'Password',
-                                    hintText: 'Enter your password here...',
-                                    hintStyle: const TextStyle(
-                                        color: Colors.black54
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.black54,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.black54,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-                                    suffixIcon: InkWell(
-                                      onTap: () => setState(
-                                            () => passwordVisibility =
-                                        !passwordVisibility,
-                                      ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: Icon(passwordVisibility ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                                        color: Colors.grey,
-                                        size: 22,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              EnterPasswordWidget(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   RawMaterialButton(
-                                    onPressed: login(),
+                                    onPressed: logging ? () => login() : () => signup(),
                                     padding: const EdgeInsets.fromLTRB(30,10,30,10),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                     fillColor: Colors.indigo,
@@ -379,59 +338,12 @@ class LoginPageState extends State<LoginPage>{
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-                                child: TextFormField(
-                                  controller: passwordController,
-                                  style: const TextStyle(
-                                      color: Colors.black
-                                  ),
-                                  obscureText: !passwordVisibility,
-                                  decoration: InputDecoration(
-                                    labelStyle: const TextStyle(
-                                      color: Colors.black54,
-                                    ),
-                                    labelText: 'Password',
-                                    hintText: 'Enter your password here...',
-                                    hintStyle: const TextStyle(
-                                        color: Colors.black54
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.black54,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.black54,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-                                    suffixIcon: InkWell(
-                                      onTap: () => setState(
-                                            () => passwordVisibility =
-                                        !passwordVisibility,
-                                      ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: Icon(passwordVisibility ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                                        color: Colors.grey,
-                                        size: 22,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              EnterPasswordWidget(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   RawMaterialButton(
-                                    onPressed: logging ? login() : signup(),
+                                    onPressed: logging ? () => login() : () => signup(),
                                     padding: const EdgeInsets.fromLTRB(30,10,30,10),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                     fillColor: Colors.indigo,
@@ -488,12 +400,115 @@ class LoginPageState extends State<LoginPage>{
         )
     );
   }
+  EnterPasswordWidget() {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+        child: TextFormField(
+          controller: passwordController,
+          style: const TextStyle(
+              color: Colors.black
+          ),
+          obscureText: !passwordVisibility,
+          decoration: InputDecoration(
+            labelStyle: const TextStyle(
+              color: Colors.black54,
+            ),
+            labelText: 'Password',
+            hintText: 'Enter your password here...',
+            hintStyle: const TextStyle(
+                color: Colors.black54
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.black54,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.black54,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+            suffixIcon: InkWell(
+              onTap: () => setState(
+                    () => passwordVisibility =
+                !passwordVisibility,
+              ),
+              focusNode: FocusNode(skipTraversal: true),
+              child: Icon(passwordVisibility ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                color: Colors.grey,
+                size: 22,
+              ),
+            ),
+          ),
+        )
+    );
+  }
+
+  showErrorPopop(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // disables popup to close if tapped outside popup (need a button to close)
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Errore:",),
+            content: Text(message),
+            actions: <Widget>[
+              MaterialButton(
+                child: const Text("Close"),
+                onPressed: () { Navigator.of(context).pop(); }, //closes popup
+              ),
+            ],
+          );
+        }
+    );
+    setState(() {
+      emailAddressController.clear();
+      nameController.clear();
+      surnameController.clear();
+      passwordController.clear();
+    });
+  }
 
   login(){
-
+    if(emailAddressController.text.isEmpty || passwordController.text.isEmpty) {
+      showErrorPopop(context, "Campi incompleti!");
+      return;
+    }
+    Model.sharedInstance.login(emailAddressController.text, passwordController.text).then((value) {
+      HomePage.userLogged = value;
+      if(value == null) {
+        showErrorPopop(context, "Credenziali Errate!");
+        return;
+      }
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+    });
   }
 
   signup(){
-
+    if(nameController.text.isEmpty || emailAddressController.text.isEmpty || surnameController.text.isEmpty || passwordController.text.isEmpty) {
+      showErrorPopop(context, "Campi incompleti!");
+      return;
+    }
+    User user = User(
+        name: nameController.text,
+        email: emailAddressController.text,
+        surname: surnameController.text,
+        password: sha256.convert(utf8.encode(passwordController.text)).toString()
+    );
+    Model.sharedInstance.signup(user).then((value) {
+      HomePage.userLogged = value;
+      if(value == null) {
+        showErrorPopop(context, "Email già in uso!");
+        return;
+      }
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+    });
   }
 }

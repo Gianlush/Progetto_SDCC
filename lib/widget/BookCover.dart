@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
 
 class BookCover extends StatelessWidget {
   @override
-  BookCover({Key key, @required this.title}) : super(key: key);
+  const BookCover({Key key, @required this.title}) : super(key: key);
 
-  String title;
+  final String title;
 
+  @override
   Widget build(BuildContext context) {
     String image = title.replaceAll(" ", "_");
     image = image.replaceAll("à", "a").trim();
@@ -15,7 +14,7 @@ class BookCover extends StatelessWidget {
       onTap:() { } ,
       child: Container(
         width: 175,
-        padding: EdgeInsets.fromLTRB(10,6,10,8),
+        padding: const EdgeInsets.fromLTRB(10,6,10,8),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           color: Colors.tealAccent,
@@ -26,7 +25,7 @@ class BookCover extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
               child: Image(
                 image: AssetImage('images/$image.jpg'),
                 width: 140,
@@ -34,7 +33,7 @@ class BookCover extends StatelessWidget {
               ),
             ),
             Text(title ,
-              style: TextStyle(color: Colors.black,
+              style: const TextStyle(color: Colors.black,
                 fontStyle: FontStyle.italic,
                 fontSize: 18,
               ),
