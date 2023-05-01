@@ -29,7 +29,7 @@ class User {
 
   @override
   String toString() {
-    return name;
+    return name +" "+surname;
   }
 
   bool equals(User user){

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sdcc_flutter/pages/HomePage.dart';
 import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
+import 'package:frontend_sdcc_flutter/pages/ReviewsPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +16,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Library',
-      theme: ThemeData.dark(),
+      theme: ThemeData.light().copyWith(
+        scrollbarTheme: ScrollbarThemeData().copyWith(
+      thumbColor: MaterialStateProperty.all(Colors.black45))),
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: ReviewsPage(),
     );
   }
 }

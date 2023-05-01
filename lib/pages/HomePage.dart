@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sdcc_flutter/object/Book.dart';
 import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
 import 'package:frontend_sdcc_flutter/widget/BookCover.dart';
-import '../object/User.dart';
 import '../utility/Model.dart';
 import '../widget/Logo.dart';
 
 class HomePage extends StatefulWidget {
 
-  static User userLogged;
-
-  HomePage({Key key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -119,73 +116,77 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: const Border.fromBorderSide(
-                              BorderSide(
-                                  color: Colors.black54,
-                                  width: 2
-                              )
-                          ),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: TextFormField(
-                                  controller: textController,
-                                  style: const TextStyle(
-                                      color: Colors.black
-                                  ),
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    prefixIcon: const Icon(Icons.search, color: Colors.black54),
-                                    labelStyle: const TextStyle(
-                                        color: Colors.white
-                                    ),
-                                    hintText: 'Search your Book here...',
-                                    hintStyle: const TextStyle(
-                                        color: Colors.black54
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.white,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.white,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-                                  ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.15, 0, 0, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width*0.6,
+                          decoration: BoxDecoration(
+                            border: const Border.fromBorderSide(
+                                BorderSide(
+                                    color: Colors.black54,
+                                    width: 2
                                 )
                             ),
-                            Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                                child: RawMaterialButton(
-                                    onPressed: () => search(),
-                                    padding: const EdgeInsets.fromLTRB(30,10,30,10),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                                    fillColor: Colors.indigo,
-                                    child: const Text("Search",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Urbanist',
-                                          fontSize: 18
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: TextFormField(
+                                    controller: textController,
+                                    style: const TextStyle(
+                                        color: Colors.black
+                                    ),
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(Icons.search, color: Colors.black54),
+                                      labelStyle: const TextStyle(
+                                          color: Colors.white
                                       ),
-                                    )
-                                )
-                            )
-                          ],
+                                      hintText: 'Search your Book here...',
+                                      hintStyle: const TextStyle(
+                                          color: Colors.black54
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+                                    ),
+                                  )
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                  child: RawMaterialButton(
+                                      onPressed: () => search(),
+                                      padding: const EdgeInsets.fromLTRB(30,10,30,10),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                      fillColor: Colors.indigo,
+                                      child: const Text("Search",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Urbanist',
+                                            fontSize: 18
+                                        ),
+                                      )
+                                  )
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -309,11 +310,11 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(50, 25, 20, 0),
                       child: Wrap(
-                          spacing: 50,
-                          runSpacing: 30,
-                          children: books.map((Book key) {
-                            return BookCover(title: key.toString());
-                          }).toList(),
+                        spacing: 50,
+                        runSpacing: 30,
+                        children: books.map((Book key) {
+                          return BookCover(title: key.toString(),proportion: 1, clickable: true);
+                        }).toList(),
                       ),
                     ),
                   )
@@ -335,7 +336,7 @@ class _HomePageState extends State<HomePage> {
 
   logout(){
     setState(() {
-      HomePage.userLogged = null;
+      LoginPage.userLogged = null;
     });
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const LoginPage()));
   }

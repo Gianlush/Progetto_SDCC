@@ -10,6 +10,7 @@ import '../utility/Model.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
 
+  static User userLogged;
 
   @override
   State<StatefulWidget> createState() {
@@ -39,13 +40,13 @@ class LoginPageState extends State<LoginPage>{
   @override
   Widget build(BuildContext context) {
     if(logging) {
-      return LoginView();
+      return loginView();
     } else {
-      return SignUpView();
+      return signUpView();
     }
   }
 
-  Widget LoginView(){
+  Widget loginView(){
     return Scaffold(
         body: Container(
             width: MediaQuery.of(context).size.width,
@@ -124,7 +125,7 @@ class LoginPageState extends State<LoginPage>{
                                   ),
                                 ),
                               ),
-                              EnterPasswordWidget(),
+                              enterPasswordWidget(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -185,7 +186,7 @@ class LoginPageState extends State<LoginPage>{
     );
   }
 
-  Widget SignUpView(){
+  Widget signUpView(){
     return Scaffold(
         body: Container(
             width: MediaQuery.of(context).size.width,
@@ -338,7 +339,7 @@ class LoginPageState extends State<LoginPage>{
                                   ),
                                 ),
                               ),
-                              EnterPasswordWidget(),
+                              enterPasswordWidget(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -400,7 +401,7 @@ class LoginPageState extends State<LoginPage>{
         )
     );
   }
-  EnterPasswordWidget() {
+  enterPasswordWidget() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
         child: TextFormField(
@@ -482,12 +483,12 @@ class LoginPageState extends State<LoginPage>{
       return;
     }
     Model.sharedInstance.login(emailAddressController.text, passwordController.text).then((value) {
-      HomePage.userLogged = value;
+      LoginPage.userLogged = value;
       if(value == null) {
         showErrorPopop(context, "Credenziali Errate!");
         return;
       }
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const HomePage()));
     });
   }
 
@@ -503,12 +504,12 @@ class LoginPageState extends State<LoginPage>{
         password: sha256.convert(utf8.encode(passwordController.text)).toString()
     );
     Model.sharedInstance.signup(user).then((value) {
-      HomePage.userLogged = value;
+      LoginPage.userLogged = value;
       if(value == null) {
         showErrorPopop(context, "Email già in uso!");
         return;
       }
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const HomePage()));
     });
   }
 }
