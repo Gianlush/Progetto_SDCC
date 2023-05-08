@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         scrollbarTheme: ScrollbarThemeData().copyWith(
       thumbColor: MaterialStateProperty.all(Colors.black45))),
       debugShowCheckedModeBanner: false,
-      home: ReviewsPage(),
+      home: HomePage(),
     );
   }
 }

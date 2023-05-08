@@ -6,11 +6,12 @@ import 'package:frontend_sdcc_flutter/pages/HomePage.dart';
 import 'package:frontend_sdcc_flutter/widget/Logo.dart';
 import '../object/User.dart';
 import '../utility/Model.dart';
+import '../widget/Popup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
 
-  static User userLogged;
+  static User userLogged = User(id:4, name: "gianluca", surname: "massara");
 
   @override
   State<StatefulWidget> createState() {
@@ -452,40 +453,16 @@ class LoginPageState extends State<LoginPage>{
     );
   }
 
-  showErrorPopop(BuildContext context, String message) {
-    showDialog(
-        context: context,
-        barrierDismissible: false, // disables popup to close if tapped outside popup (need a button to close)
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Errore:",),
-            content: Text(message),
-            actions: <Widget>[
-              MaterialButton(
-                child: const Text("Close"),
-                onPressed: () { Navigator.of(context).pop(); }, //closes popup
-              ),
-            ],
-          );
-        }
-    );
-    setState(() {
-      emailAddressController.clear();
-      nameController.clear();
-      surnameController.clear();
-      passwordController.clear();
-    });
-  }
 
   login(){
     if(emailAddressController.text.isEmpty || passwordController.text.isEmpty) {
-      showErrorPopop(context, "Campi incompleti!");
+      showPopop(context, "Campi incompleti!");
       return;
     }
     Model.sharedInstance.login(emailAddressController.text, passwordController.text).then((value) {
       LoginPage.userLogged = value;
       if(value == null) {
-        showErrorPopop(context, "Credenziali Errate!");
+        showPopop(context, "Credenziali Errate!");
         return;
       }
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const HomePage()));
@@ -494,7 +471,7 @@ class LoginPageState extends State<LoginPage>{
 
   signup(){
     if(nameController.text.isEmpty || emailAddressController.text.isEmpty || surnameController.text.isEmpty || passwordController.text.isEmpty) {
-      showErrorPopop(context, "Campi incompleti!");
+      showPopop(context, "Campi incompleti!");
       return;
     }
     User user = User(
@@ -506,7 +483,7 @@ class LoginPageState extends State<LoginPage>{
     Model.sharedInstance.signup(user).then((value) {
       LoginPage.userLogged = value;
       if(value == null) {
-        showErrorPopop(context, "Email già in uso!");
+        showPopop(context, "Email già in uso!");
         return;
       }
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const HomePage()));

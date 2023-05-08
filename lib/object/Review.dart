@@ -18,7 +18,7 @@ class Review {
       book: Book.fromJson(json['book']),
       user: User.fromJson(json['user']),
       comment: json['comment'],
-      starNumber: json['star_number'],
+      starNumber: json['starNumber'],
       images: json['images'],
       title: json['title']
     );
@@ -28,7 +28,7 @@ class Review {
     'id': id,
     'book': book,
     'user': user,
-    'star_number': starNumber,
+    'starNumber': starNumber,
     'images':images,
     'title':title,
     'comment':comment
@@ -40,7 +40,7 @@ class Review {
   }
 
   bool equals(Review review){
-    return (user.id==user.id && book.id==book.id);
+    return (user.id==review.user.id && book.id==review.book.id);
   }
 
 }

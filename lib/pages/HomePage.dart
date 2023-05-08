@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                       padding: EdgeInsets.fromLTRB(8, 2, 0, 0),
-                                      child: Icon(Icons.account_circle_outlined, size: 25)
+                                      child: Icon(Icons.account_circle_outlined, size: 25, color: Colors.blueAccent,)
                                   ),
                                 ],
                               ),
@@ -313,7 +313,7 @@ class _HomePageState extends State<HomePage> {
                         spacing: 50,
                         runSpacing: 30,
                         children: books.map((Book key) {
-                          return BookCover(title: key.toString(),proportion: 1, clickable: true);
+                          return BookCover(book: key, proportion: 1, clickable: true);
                         }).toList(),
                       ),
                     ),

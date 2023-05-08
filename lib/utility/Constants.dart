@@ -25,6 +25,12 @@ class Constants{
   static const String REQUEST_ADD_USER = "/users";
   static const String REQUEST_USER_BY_EMAIL = "/users/email";
   static const String REQUEST_GET_OR_CREATE_ORDER = "/orders";
+  static const String REQUEST_SEARCH_REVIEW_OWN = "/reviews/own";
+  static const String REQUEST_SEARCH_REVIEW_ALL = "/reviews/all";
+  static const String REQUEST_SEARCH_REVIEW_KEYWORD = "/reviews/keyword";
+  static const String REQUEST_SEARCH_REVIEW_STAR = "/reviews/star";
+  static const String REQUEST_SEARCH_REVIEW_STAR_KEYWORD = "/reviews/star_keyword";
+  static const String REQUEST_SEARCH_REVIEW_SAVE = "/reviews/save";
 
 
 

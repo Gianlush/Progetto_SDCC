@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BorderedIcon extends Icon {
@@ -8,7 +7,7 @@ class BorderedIcon extends Icon {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
           shape: StarBorder(
             pointRounding: 0.10,
               side: BorderSide(

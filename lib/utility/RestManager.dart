@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart';
+
+import '../object/Review.dart';
 
 
 enum TypeHeader {
@@ -17,14 +20,15 @@ class RestManager {
     Uri uri = Uri.http(serverAddress, servicePath, value);
     while ( true ) {
       try {
-        var response;
+        Response response;
         // setting content type
         String contentType;
         dynamic formattedBody;
         if ( type == TypeHeader.json ) {
           contentType = "application/json;charset=utf-8";
-          if(body.runtimeType == String)
+          if(body.runtimeType == String) {
             formattedBody = body;
+          }
           formattedBody = json.encode(body);
         }
         else if ( type == TypeHeader.urlencoded ) {
@@ -32,7 +36,7 @@ class RestManager {
           formattedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
         }
         // setting headers
-        Map<String, String> headers = Map();
+        Map<String, String> headers = {};
         headers[HttpHeaders.contentTypeHeader] = contentType;
         headers[HttpHeaders.accessControlAllowOriginHeader] = "*";
         headers[HttpHeaders.acceptHeader] = "*/*";
@@ -80,8 +84,8 @@ class RestManager {
     }
   }
 
-  Future<String> makePostRequest(String serverAddress, String servicePath, dynamic value, {TypeHeader type = TypeHeader.json}) async {
-    return _makeRequest(serverAddress, servicePath, "post", type, body: value);
+  Future<String> makePostRequest(String serverAddress, String servicePath, dynamic body, {Map<String, String> param, TypeHeader type = TypeHeader.json}) async {
+    return _makeRequest(serverAddress, servicePath, "post", type, body: body, value: param);
   }
 
   Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type = TypeHeader.json]) async {
@@ -94,6 +98,42 @@ class RestManager {
 
   Future<String> makeDeleteRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
     return _makeRequest(serverAddress, servicePath, "delete", type, value: value);
+  }
+
+  Future<Response> makePostMultiPartRequest(String serverAddress, String servicePath, Review review, List<PlatformFile> files, {TypeHeader type = TypeHeader.json}) async {
+    try{
+      Uri uri = Uri.http(serverAddress, servicePath);
+
+      String contentType;
+      if ( type == TypeHeader.json ) {
+        contentType = "application/json;charset=utf-8";
+      }
+      else if ( type == TypeHeader.urlencoded ) {
+        contentType = "application/x-www-form-urlencoded";
+      }
+
+      MultipartRequest request = MultipartRequest('POST', uri);
+      Map<String, String> headers = {};
+      headers[HttpHeaders.contentTypeHeader] = contentType;
+      headers[HttpHeaders.accessControlAllowOriginHeader] = "*";
+      headers[HttpHeaders.acceptHeader] = "*/*";
+      request.headers.addAll(headers);
+
+      request.fields["jsonReview"] = jsonEncode(review);
+      List<MultipartFile> toAdd = [];
+      for(PlatformFile file in files) {
+        toAdd.add(MultipartFile.fromBytes("files", file.bytes));
+      }
+      request.files.addAll(toAdd);
+
+      StreamedResponse res = await request.send();
+      Response response = await Response.fromStream(res);
+      return response;
+    }
+    catch(e){
+      print(e);
+      return null;
+    }
   }
 
 
