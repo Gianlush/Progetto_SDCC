@@ -21,7 +21,7 @@ public class UserService {
         return userRepository.findUserByEmailAndPassword(email, hashedPassword);
     }
 
-    @Transactional()
+    @Transactional
     public User registerUser(User user) {
         if (userRepository.existsUserByEmail(user.getEmail()))
             return null;

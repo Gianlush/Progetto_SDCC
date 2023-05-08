@@ -1,7 +1,6 @@
 package com.example.backend_sdcc_spring.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,25 +15,25 @@ import lombok.ToString;
 @Table(name = "review", schema = "my_library")
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
     @JoinColumn(name = "book")
     private Book book;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
     @JoinColumn(name = "user")
     private User user;
 
     @Basic
+    @JoinColumn(name = "comment")
+    private String comment;
+
+    @Basic
     @Column(name = "star_number")
-    private int star_number;
+    private int starNumber;
 
 
     @Basic

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,8 +18,9 @@ import java.util.Set;
 @Entity
 @Table(name = "book", schema = "my_library")
 public class Book {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -44,10 +46,6 @@ public class Book {
     @OneToMany(mappedBy = "book")
     @JsonIgnore
     @ToString.Exclude
-    private Set<Review> reviews;
-
-    private void addReview(Review review){
-        this.reviews.add(review);
-    }
+    private List<Review> reviews;
 
 }
