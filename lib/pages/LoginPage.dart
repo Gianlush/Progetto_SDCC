@@ -11,7 +11,7 @@ import '../widget/Popup.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
 
-  static User userLogged = User(id:4, name: "gianluca", surname: "massara");
+  static User userLogged;
 
   @override
   State<StatefulWidget> createState() {
@@ -481,12 +481,14 @@ class LoginPageState extends State<LoginPage>{
         password: sha256.convert(utf8.encode(passwordController.text)).toString()
     );
     Model.sharedInstance.signup(user).then((value) {
-      LoginPage.userLogged = value;
       if(value == null) {
         showPopop(context, "Email già in uso!");
         return;
       }
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const HomePage()));
+      LoginPage.userLogged = value;
+      if(value!=null) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const HomePage()));
+      }
     });
   }
 }

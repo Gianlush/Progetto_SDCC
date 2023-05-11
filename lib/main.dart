@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Library',
       theme: ThemeData.light().copyWith(
-        scrollbarTheme: ScrollbarThemeData().copyWith(
+        scrollbarTheme: const ScrollbarThemeData().copyWith(
       thumbColor: MaterialStateProperty.all(Colors.black45))),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const LoginPage(),
     );
   }
 }

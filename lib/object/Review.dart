@@ -40,6 +40,9 @@ class Review {
   }
 
   bool equals(Review review){
+    if(review==null) {
+      return this==null;
+    }
     return (user.id==review.user.id && book.id==review.book.id);
   }
 

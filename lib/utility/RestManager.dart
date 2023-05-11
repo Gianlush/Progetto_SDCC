@@ -49,7 +49,7 @@ class RestManager {
             response = await post(
               uri,
               headers: headers,
-              body: formattedBody,
+              body: formattedBody
             );
             break;
           case "get":
@@ -100,7 +100,14 @@ class RestManager {
     return _makeRequest(serverAddress, servicePath, "delete", type, value: value);
   }
 
-  Future<Response> makePostMultiPartRequest(String serverAddress, String servicePath, Review review, List<PlatformFile> files, {TypeHeader type = TypeHeader.json}) async {
+  void makePostMultiPartRequestProva(String serverAddress, String servicePath, PlatformFile files){
+    Uri uri = Uri.http(serverAddress, servicePath);
+    MultipartRequest request = MultipartRequest('POST', uri);
+    request.files.add(MultipartFile.fromBytes("file", files.bytes));
+    request.send();
+  }
+
+  Future<Review> makePostMultiPartRequest(String serverAddress, String servicePath, Review review, List<PlatformFile> files, {TypeHeader type = TypeHeader.json}) async {
     try{
       Uri uri = Uri.http(serverAddress, servicePath);
 
@@ -114,21 +121,26 @@ class RestManager {
 
       MultipartRequest request = MultipartRequest('POST', uri);
       Map<String, String> headers = {};
-      headers[HttpHeaders.contentTypeHeader] = contentType;
+      //headers[HttpHeaders.contentTypeHeader] = contentType;
       headers[HttpHeaders.accessControlAllowOriginHeader] = "*";
       headers[HttpHeaders.acceptHeader] = "*/*";
       request.headers.addAll(headers);
 
-      request.fields["jsonReview"] = jsonEncode(review);
+      //request.fields["jsonReview"] = jsonEncode(review);
       List<MultipartFile> toAdd = [];
       for(PlatformFile file in files) {
         toAdd.add(MultipartFile.fromBytes("files", file.bytes));
       }
       request.files.addAll(toAdd);
+      print(request.files.length);
 
+      print("s");
       StreamedResponse res = await request.send();
+      print(res.reasonPhrase);
       Response response = await Response.fromStream(res);
-      return response;
+      print(response.body);
+      //Review x = Review.fromJson(jsonDecode(response.body));
+      print("w");
     }
     catch(e){
       print(e);

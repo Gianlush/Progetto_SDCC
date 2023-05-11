@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     textController = TextEditingController(text: "");
-    search();
     autoriSelezionati = [];
     etaSelezionate = [];
     generiSelezionati = [];
@@ -66,6 +65,7 @@ class _HomePageState extends State<HomePage> {
       "Horror" : false,
       "Romanzo" : false,
     };
+    search();
   }
 
   @override
@@ -327,7 +327,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   search(){
-    Model.sharedInstance.searchBookByName(name:textController.text).then((value) {
+    Model.sharedInstance.searchBook(name:textController.text, ages: etaSelezionate, authors: autoriSelezionati, genres: generiSelezionati).then((value) {
       setState(() {
         books = value;
       });
@@ -350,11 +350,7 @@ class _HomePageState extends State<HomePage> {
         autoriSelezionati.remove(key);
       }
     });
-    Model.sharedInstance.searchBookByAuthorsIn(authors: autoriSelezionati).then((value) {
-      setState(() {
-        books = value;
-      });
-    });
+    search();
   }
 
 
@@ -367,11 +363,7 @@ class _HomePageState extends State<HomePage> {
         etaSelezionate.remove(key);
       }
     });
-    Model.sharedInstance.searchBookByAge(ages: etaSelezionate).then((response) {
-      setState(() {
-        books = response;
-      });
-    });
+    search();
   }
 
 
@@ -384,11 +376,7 @@ class _HomePageState extends State<HomePage> {
         generiSelezionati.remove(key);
       }
     });
-    Model.sharedInstance.searchBookByGenresIn(genres: generiSelezionati).then((value) {
-      setState(() {
-        books = value;
-      });
-    });
+    search();
   }
 
 }

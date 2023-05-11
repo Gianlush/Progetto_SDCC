@@ -1,8 +1,4 @@
 
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:file_saver/file_saver.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:file_picker/file_picker.dart';
@@ -20,7 +16,7 @@ import '../widget/Popup.dart';
 class ReviewsPage extends StatefulWidget {
   const ReviewsPage({Key key}) : super(key: key);
 
-  static Book book = Book(id: 20, name: "IT");
+  static Book book;
 
   @override
   State<StatefulWidget> createState() {
@@ -38,9 +34,10 @@ class ReviewsPageState extends State<ReviewsPage> {
 
   List <String> listStarFilter;
   String filterSelected;
-  List<Image> images;
+  //List<Image> images;
   List<PlatformFile> imageFiles;
   double rating;
+  bool loading;
 
   List<Review> reviews;
   Review userReview;
@@ -56,10 +53,10 @@ class ReviewsPageState extends State<ReviewsPage> {
     commentController = TextEditingController();
     titleController = TextEditingController();
     searchController = TextEditingController();
-    listStarFilter = ["Tutte le stelle","Solo 0 stelle", "Solo 1 stella","Solo 2 stelle","Solo 3 stelle" ,"Solo 4 stelle", "solo 5 stelle"];
+    listStarFilter = ["Tutte le stelle","Solo 0 stelle", "Solo 1 stella","Solo 2 stelle","Solo 3 stelle" ,"Solo 4 stelle", "Solo 5 stelle"];
 
     filterSelected = "Tutte le stelle";
-    images = [];
+    //images = [];
     imageFiles = [];
     rating = 0;
     scrollControllerGallery = ScrollController();
@@ -68,213 +65,216 @@ class ReviewsPageState extends State<ReviewsPage> {
     reviews = [];
     userReview = null;
     wordsHighlight={};
+    loading = true;
 
     searchReviews(init: true);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+    return
+      loading ? SizedBox() : Scaffold(
           backgroundColor: Colors.white,
-          title: const Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-            child: Text(
-              "Reviews",
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            title: const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: Text(
+                "Reviews",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
-          ),
-          shape: const Border(
-              bottom: BorderSide(
-                  color: Colors.blue,
-                  width: 8
-              )
-          ),
-          leading: IconButton(
-            color: Colors.black,
-            icon: const Icon(Icons.arrow_back),
-            iconSize: 30,
-            onPressed: () async { Navigator.pop(context); },
-          ),
-        ),
-        body: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(0 , 10 , 0, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Scrollbar(
-                  thumbVisibility: true,
-                  trackVisibility: true,
-                  controller: scrollControllerMainHorizontal,
-                  child: SingleChildScrollView(
-                    controller: scrollControllerMainHorizontal,
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(65, 0 , 25, 35),
-                          child: BookCover(book: ReviewsPage.book,proportion: 1.8, clickable: false),
-                        ),
-                        userReview==null ? createReview():
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                              child: Text(
-                                "La tua recensione:",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  border: Border.fromBorderSide(BorderSide(
-                                      color: Colors.blueAccent,
-                                      width: 2
-                                  ))
-                              ),
-                              child: reviewWidget(userReview, proportion: 0.6, user: true),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(65, 20, 0, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*0.55,
-                    decoration: const BoxDecoration(
-                      border: Border.fromBorderSide(
-                          BorderSide(
-                              color: Colors.black54,
-                              width: 2
-                          )
-                      ),
-                      color: Colors.white,
-                      //borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: TextFormField(
-                              controller: searchController,
-                              style: const TextStyle(
-                                  color: Colors.black
-                              ),
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.search, color: Colors.black54),
-                                labelStyle: const TextStyle(
-                                    color: Colors.white
-                                ),
-                                hintText: 'Search review by keyword...',
-                                hintStyle: const TextStyle(
-                                    color: Colors.black54
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-                              ),
-                            )
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                            child: RawMaterialButton(
-                                onPressed: () => searchReviews(),
-                                padding: const EdgeInsets.fromLTRB(30,10,30,10),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                                fillColor: Colors.indigo,
-                                child: const Text("Search",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Urbanist',
-                                      fontSize: 18
-                                  ),
-                                )
-                            )
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(65, 20, 0, 0),
-                  child: Text(
-                    "Filtra per:",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(65, 8, 0, 0),
-                  child: DropdownButton<String>(
-                    items: listStarFilter.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Padding(padding: const EdgeInsets.fromLTRB(0, 0, 6, 0), child: Text(value,style: const TextStyle(color: Colors.black, fontSize: 20))),
-                      );}).toList(),
-                    value: filterSelected,
-                    icon: const Icon(Icons.star, color: Colors.amber,size: 30),
-                    dropdownColor: Colors.white,
-                    onChanged: (String newValue) => {
-                      setState(() {
-                        filterSelected = newValue;
-                        searchReviews();
-                      })
-                    },
-                  ),
-                ),
-                Column(
-                  children: reviews.map((Review review) {
-                    if(!review.equals(userReview)) {
-                      return reviewWidget(review, proportion: 0.7, user: false);
-                    }
-                    return const SizedBox();
-                  }).toList(),
-
-                ),
-              ],
+            shape: const Border(
+                bottom: BorderSide(
+                    color: Colors.blue,
+                    width: 8
+                )
+            ),
+            leading: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back),
+              iconSize: 30,
+              onPressed: () async { Navigator.pop(context); },
             ),
           ),
-        )
-    );
+          body: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(0 , 10 , 0, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Scrollbar(
+                    thumbVisibility: true,
+                    trackVisibility: true,
+                    controller: scrollControllerMainHorizontal,
+                    child: SingleChildScrollView(
+                      controller: scrollControllerMainHorizontal,
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(65, 0 , 25, 35),
+                            child: BookCover(book: ReviewsPage.book,proportion: 1.8, clickable: false),
+                          ),
+                          userReview==null ? createReview():
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                                child: Text(
+                                  "La tua recensione:",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: Border.fromBorderSide(BorderSide(
+                                        color: Colors.blueAccent,
+                                        width: 2
+                                    ))
+                                ),
+                                child: reviewWidget(userReview, proportion: 0.5, user: true),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(65, 20, 0, 0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*0.55,
+                      decoration: const BoxDecoration(
+                        border: Border.fromBorderSide(
+                            BorderSide(
+                                color: Colors.black54,
+                                width: 2
+                            )
+                        ),
+                        color: Colors.white,
+                        //borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: TextFormField(
+                                controller: searchController,
+                                style: const TextStyle(
+                                    color: Colors.black
+                                ),
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.search, color: Colors.black54),
+                                  labelStyle: const TextStyle(
+                                      color: Colors.white
+                                  ),
+                                  hintText: 'Search review by keyword...',
+                                  hintStyle: const TextStyle(
+                                      color: Colors.black54
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+                                ),
+                              )
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                              child: RawMaterialButton(
+                                  onPressed: () => searchReviews(),
+                                  padding: const EdgeInsets.fromLTRB(30,10,30,10),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                  fillColor: Colors.indigo,
+                                  child: const Text("Search",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Urbanist',
+                                        fontSize: 18
+                                    ),
+                                  )
+                              )
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(65, 20, 0, 0),
+                    child: Text(
+                      "Filtra per:",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(65, 8, 0, 0),
+                    child: DropdownButton<String>(
+                      items: listStarFilter.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Padding(padding: const EdgeInsets.fromLTRB(0, 0, 6, 0), child: Text(value,style: const TextStyle(color: Colors.black, fontSize: 20))),
+                        );}).toList(),
+                      value: filterSelected,
+                      icon: const Icon(Icons.star, color: Colors.amber,size: 30),
+                      dropdownColor: Colors.white,
+                      onChanged: (String newValue) => {
+                        setState(() {
+                          filterSelected = newValue;
+                          searchReviews();
+                        })
+                      },
+                    ),
+                  ),
+                  Column(
+                    children: reviews.map((Review review) {
+                      if(!review.equals(userReview)) {
+                        return Column(children: [reviewWidget(review, proportion: 0.55, user: false), const SizedBox(height: 10,)],);
+                      }
+                      return const SizedBox();
+                    }).toList(),
+
+                  ),
+                ],
+              ),
+            ),
+          )
+      );
   }
 
   Widget createReview(){
@@ -436,7 +436,7 @@ class ReviewsPageState extends State<ReviewsPage> {
               ),
               Row(
                 children: [
-                  images.isEmpty ? const SizedBox.shrink() :
+                  imageFiles.isEmpty ? const SizedBox.shrink() :
                   Padding(
                     padding: const EdgeInsets.fromLTRB(5, 0, 15, 0),
                     child: Container(
@@ -451,17 +451,18 @@ class ReviewsPageState extends State<ReviewsPage> {
                           child: ListView(
                             controller: scrollControllerGallery,
                             scrollDirection: Axis.vertical,
-                            children: images.map((Image image) {
+                            children: imageFiles.map((PlatformFile file) {
+                              Image image = Image.memory(file.bytes);
                               return Row(
                                 children: [
                                   Column(
                                     children: [
                                       Text(
-                                        "${images.indexOf(image)+1}°",
+                                        "${imageFiles.indexOf(file)+1}°",
                                         style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                       ),
                                       IconButton(
-                                        onPressed: () => removeImage(image),
+                                        onPressed: () => removeImage(file),
                                         icon: const Icon(Icons.delete_forever, color: Colors.red, size: 20),
                                         splashRadius: 20,
                                       )
@@ -506,7 +507,7 @@ class ReviewsPageState extends State<ReviewsPage> {
               Padding(
                   padding: const EdgeInsets.fromLTRB(40, 50, 0, 0),
                   child: RawMaterialButton(
-                      onPressed: () => saveReview(),
+                      onPressed: () => saveProva(),
                       padding: const EdgeInsets.fromLTRB(30,10,30,10),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                       fillColor: Colors.indigo,
@@ -573,6 +574,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                   words: user ? {} : wordsHighlight,
                 ),
               ),
+              const SizedBox(height: 8),
               review.images=="" ? const SizedBox() :
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.start,
@@ -589,28 +591,32 @@ class ReviewsPageState extends State<ReviewsPage> {
   }
 
   void searchReviews({bool init=false}){
+
     if(init){
       Model.sharedInstance.searchReviews(book: ReviewsPage.book).then((value) {
         setState(() {
+          loading = false;
           reviews=value;
         });
       });
       Model.sharedInstance.searchReviews(book: ReviewsPage.book, user: LoginPage.userLogged).then((value) {
-        if(value.isNotEmpty) {
+        if(value.isNotEmpty && LoginPage.userLogged!=null) {
+          loading = false;
           userReview=value.first;
         }
       });
     }
     else {
+
       Model.sharedInstance.searchReviews(book: ReviewsPage.book, keyword: searchController.text, starNumber: listStarFilter.indexOf(filterSelected)-1).then((value) {
         setState(() {
           reviews=value;
-
-          wordsHighlight = {
-            searchController.text : HighlightedWord(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.yellow),
-            )
-          };
+          if(searchController.text=="") {
+            wordsHighlight = {"PAROLA_NON_ESISTENTE" : HighlightedWord(decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.yellow))};
+          }
+          else {
+            wordsHighlight = {searchController.text : HighlightedWord(decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.yellow))};
+          }
         });
       });
     }
@@ -619,23 +625,32 @@ class ReviewsPageState extends State<ReviewsPage> {
 
   void removeImage(image){
     setState(() {
-      images.remove(image);
+      imageFiles.remove(image);
     });
   }
 
   Future<void> pickFile() async {
-    FilePickerResult result = await FilePicker.platform.pickFiles(allowMultiple: true, type: FileType.custom, allowedExtensions: ['png', 'jpg', 'jpeg','png']);
-    imageFiles = result.files;
-    List<Image> files = imageFiles.map((file) => Image.memory(file.bytes)).toList();
-    setState(() {
-      images.addAll(files);
-    });
+    try {
+      FilePickerResult result = await FilePicker.platform.pickFiles(allowMultiple: true, type: FileType.custom, allowedExtensions: ['png', 'jpg', 'jpeg','png']);
+
+      //List<Image> files = imageFiles.map((file) => Image.memory(file.bytes)).toList();
+      setState(() {
+        imageFiles.addAll(result.files);
+        //images.addAll(files);
+      });
+    } catch (e){
+      print("------ Pick file annullato");
+    }
   }
 
   void updateRating(newRating){
     setState(() {
       rating=newRating;
     });
+  }
+
+  void saveProva(){
+    Model.sharedInstance.saveProva(imageFiles.first);
   }
 
   void saveReview(){
@@ -657,10 +672,18 @@ class ReviewsPageState extends State<ReviewsPage> {
       comment: commentController.text,
       images: paths,
     );
+    print(imageFiles.length);
     Model.sharedInstance.saveReview(review, imageFiles).then((value) {
-      if(value.statusCode==200){
-        showPopop(context, "Salvataggio Recensione eseguito!",title: "Attenzione:");
+      if(value !=  null){
+        showPopop(context, "Salvataggio recensione eseguito!",title: "Attenzione:");
       }
+      else{
+        showPopop(context, "Impossibile salvare recensione!",title: "Errore:");
+      }
+      setState(() {
+        userReview=value;
+      });
+
     });
   }
 
