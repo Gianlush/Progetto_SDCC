@@ -11,10 +11,10 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     List<Review> findByUserAndBook(User user, Book book);
-    List<Review> findAllByBook(Book book);
-    List<Review> findAllByBookAndCommentContaining(Book book, String keyword);
+    List<Review> findAllByBookOrderByStarNumberDesc(Book book);
+    List<Review> findAllByBookAndCommentContainingOrderByStarNumberDesc(Book book, String keyword);
 
-    List<Review> findAllByBookAndStarNumber(Book book, int starNumber);
+    List<Review> findAllByBookAndStarNumberOrderByStarNumberDesc(Book book, int starNumber);
 
-    List<Review> findAllByBookAndStarNumberAndCommentContaining(Book book, int starNumber, String keyword);
+    List<Review> findAllByBookAndStarNumberAndCommentContainingOrderByStarNumberDesc(Book book, int starNumber, String keyword);
 }

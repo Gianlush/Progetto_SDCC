@@ -52,18 +52,18 @@ public class ReviewService {
         return reviewRepository.findByUserAndBook(user,book);
     }
     public List<Review> showAllByBook(Book book){
-        return reviewRepository.findAllByBook(book);
+        return reviewRepository.findAllByBookOrderByStarNumberDesc(book);
     }
     public List<Review> showAllByBookAndCommentContaining(Book book, String keyword){
-        return reviewRepository.findAllByBookAndCommentContaining(book, keyword);
+        return reviewRepository.findAllByBookAndCommentContainingOrderByStarNumberDesc(book, keyword);
     }
 
     public List<Review> showAllByBookAndStarNumber(Book book, int starNumber){
-        return reviewRepository.findAllByBookAndStarNumber(book, starNumber);
+        return reviewRepository.findAllByBookAndStarNumberOrderByStarNumberDesc(book, starNumber);
     }
 
     public List<Review> showAllByBookAndStarNumberAndCommentContaining(Book book, int starNumber, String keyword){
-        return reviewRepository.findAllByBookAndStarNumberAndCommentContaining(book,starNumber,keyword);
+        return reviewRepository.findAllByBookAndStarNumberAndCommentContainingOrderByStarNumberDesc(book,starNumber,keyword);
     }
 
 
