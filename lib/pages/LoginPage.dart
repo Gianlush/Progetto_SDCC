@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterwebapp_reload_detector/flutterwebapp_reload_detector.dart';
 import 'package:frontend_sdcc_flutter/pages/HomePage.dart';
 import 'package:frontend_sdcc_flutter/widget/Logo.dart';
 import '../object/User.dart';

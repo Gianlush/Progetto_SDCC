@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         scrollbarTheme: const ScrollbarThemeData().copyWith(
       thumbColor: MaterialStateProperty.all(Colors.black45))),
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: LoginPage.userLogged==null ? const LoginPage() : const HomePage(),
     );
   }
 }

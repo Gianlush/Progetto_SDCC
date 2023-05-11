@@ -4,6 +4,7 @@ import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutterwebapp_reload_detector/flutterwebapp_reload_detector.dart';
 import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
 import 'package:frontend_sdcc_flutter/utility/Model.dart';
 import 'package:frontend_sdcc_flutter/widget/BookCover.dart';
@@ -11,7 +12,9 @@ import 'package:highlight_text/highlight_text.dart';
 
 import '../object/Book.dart';
 import '../object/Review.dart';
+import '../object/User.dart';
 import '../widget/Popup.dart';
+import 'HomePage.dart';
 
 class ReviewsPage extends StatefulWidget {
   const ReviewsPage({Key key}) : super(key: key);
@@ -56,6 +59,7 @@ class ReviewsPageState extends State<ReviewsPage> {
     listStarFilter = ["Tutte le stelle","Solo 0 stelle", "Solo 1 stella","Solo 2 stelle","Solo 3 stelle" ,"Solo 4 stelle", "Solo 5 stelle"];
 
     filterSelected = "Tutte le stelle";
+
     //images = [];
     imageFiles = [];
     rating = 0;
@@ -581,7 +585,13 @@ class ReviewsPageState extends State<ReviewsPage> {
                 runSpacing: 7,
                 spacing: 10,
                 children: review.images.split(",").map((String key) {
-                  return Image.asset("images/reviews/" + Uri.encodeFull(key), width: 200, height: 200);
+                  Image image = Image.asset("images/reviews/" + Uri.encodeFull(key), width: 200, height: 200);
+                  return InkWell(
+                    onTap: () {
+                      showImageViewer(context,image.image,swipeDismissible: true,immersive: false);
+                    },
+                    child: image,
+                  );
                 }).toList(),
               ),
             ],
@@ -630,9 +640,16 @@ class ReviewsPageState extends State<ReviewsPage> {
   }
 
   Future<void> pickFile() async {
+    List<String> allowedExtension = ['png', 'jpg', 'jpeg','png'];
     try {
-      FilePickerResult result = await FilePicker.platform.pickFiles(allowMultiple: true, type: FileType.custom, allowedExtensions: ['png', 'jpg', 'jpeg','png']);
+      FilePickerResult result = await FilePicker.platform.pickFiles(allowMultiple: true, type: FileType.custom, allowedExtensions: allowedExtension);
+      for(PlatformFile file in result.files){
+        if(!allowedExtension.contains(file.extension)) {
+          showPopop(context, "Selezionato un file con il formato sbagliato!",title: "Errore!");
+          return;
+        }
 
+      }
       //List<Image> files = imageFiles.map((file) => Image.memory(file.bytes)).toList();
       setState(() {
         imageFiles.addAll(result.files);
@@ -650,7 +667,7 @@ class ReviewsPageState extends State<ReviewsPage> {
   }
 
   void saveReview(){
-    if(titleController.text=="" || commentController.text=="") {
+    if(titleController.text.trim()=="" || commentController.text.trim()=="") {
       showPopop(context, "Campi recensione incompleti!");
       return;
     }
