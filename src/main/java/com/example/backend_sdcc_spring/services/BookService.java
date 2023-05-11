@@ -1,13 +1,12 @@
 package com.example.backend_sdcc_spring.services;
+
 import com.example.backend_sdcc_spring.entities.Book;
-import com.example.backend_sdcc_spring.entities.Review;
 import com.example.backend_sdcc_spring.repositories.BookRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ import java.util.List;
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
-
     public List<Book> showAllBook(String name, String listAges, String listGenres, String listAuthors) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         List<String> ages = mapper.readValue(listAges, List.class);

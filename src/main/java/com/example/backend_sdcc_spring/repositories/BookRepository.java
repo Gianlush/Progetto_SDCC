@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
@@ -24,7 +23,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findBookByNameContainsIgnoreCaseAndGenreInAndAgeIn(String name, List<String> genres, List<String> ages);
     List<Book> findBookByNameContainsIgnoreCaseAndAuthorInAndAgeIn(String name, List<String> authors, List<String> ages);
-
-
 
 }

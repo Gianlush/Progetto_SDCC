@@ -1,15 +1,13 @@
 package com.example.backend_sdcc_spring.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.List;
-
 @Getter
 @Setter
 @ToString
@@ -43,5 +41,4 @@ public class User {
     @JsonIgnore
     @ToString.Exclude
     private List<Review> reviews;
-
 }

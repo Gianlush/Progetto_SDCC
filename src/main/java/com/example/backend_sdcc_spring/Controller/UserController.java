@@ -1,16 +1,14 @@
 package com.example.backend_sdcc_spring.Controller;
-
 import com.example.backend_sdcc_spring.entities.User;
 import com.example.backend_sdcc_spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user", produces = "application/json;charset=UTF-8")
 public class UserController {
 
     @Autowired
@@ -25,5 +23,4 @@ public class UserController {
     public User registerUser(@RequestBody User user) {
         return userService.registerUser(user);
     }
-
 }
