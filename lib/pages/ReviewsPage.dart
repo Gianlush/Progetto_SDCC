@@ -80,7 +80,7 @@ class ReviewsPageState extends State<ReviewsPage> {
             title: const Padding(
               padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Text(
-                "Reviews",
+                "Recensioni",
                 style: TextStyle(
                   fontSize: 25,
                   color: Colors.black,
@@ -150,7 +150,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                                         width: 2
                                     ))
                                 ),
-                                child: reviewWidget(userReview, proportion: 0.5, user: true),
+                                child: reviewWidget(userReview, proportion: 0.45, user: true),
                               )
                             ],
                           ),
@@ -186,7 +186,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                                   labelStyle: const TextStyle(
                                       color: Colors.white
                                   ),
-                                  hintText: 'Search review by keyword...',
+                                  hintText: 'Cerca per parola chiave...',
                                   hintStyle: const TextStyle(
                                       color: Colors.black54
                                   ),
@@ -217,7 +217,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                                   padding: const EdgeInsets.fromLTRB(30,10,30,10),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                   fillColor: Colors.indigo,
-                                  child: const Text("Search",
+                                  child: const Text("Cerca",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -324,7 +324,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                   ),
                 ),
                 const Text(
-                  "Title:",
+                  "Titolo:",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
@@ -344,7 +344,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                       labelStyle: const TextStyle(
                           color: Colors.black54
                       ),
-                      hintText: 'Choose a title for your review..',
+                      hintText: 'Scegli un titolo per la tua recensione..',
                       hintStyle: const TextStyle(
                           color: Colors.black54
                       ),
@@ -369,7 +369,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                   ),
                 ),
                 const Text(
-                  "Review:",
+                  "Recensione:",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
@@ -390,7 +390,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                         labelStyle: const TextStyle(
                             color: Colors.black54
                         ),
-                        hintText: 'Write your review here..',
+                        hintText: 'Scrivi qui la tua recensione..',
                         hintStyle: const TextStyle(
                             color: Colors.black54
                         ),
@@ -507,11 +507,11 @@ class ReviewsPageState extends State<ReviewsPage> {
               Padding(
                   padding: const EdgeInsets.fromLTRB(40, 50, 0, 0),
                   child: RawMaterialButton(
-                      onPressed: () => saveProva(),
+                      onPressed: () => saveReview(),
                       padding: const EdgeInsets.fromLTRB(30,10,30,10),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                       fillColor: Colors.indigo,
-                      child: const Text("Save",
+                      child: const Text("Salva",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -649,10 +649,6 @@ class ReviewsPageState extends State<ReviewsPage> {
     });
   }
 
-  void saveProva(){
-    Model.sharedInstance.saveProva(imageFiles.first);
-  }
-
   void saveReview(){
     if(titleController.text=="" || commentController.text=="") {
       showPopop(context, "Campi recensione incompleti!");
@@ -661,9 +657,12 @@ class ReviewsPageState extends State<ReviewsPage> {
 
     String paths = "";
     for(PlatformFile file in imageFiles){
-      paths=paths + "BookID"+ReviewsPage.book.id.toString()+"_"+file.name.replaceAll(" ", "");
-      paths=paths+",";
+      paths=paths + "B"+ReviewsPage.book.id.toString()+"_U"+LoginPage.userLogged.id.toString()+"_"+file.name.replaceAll(" ", "");
+      if(imageFiles.last!=file) {
+        paths=paths+",";
+      }
     }
+
     Review review = Review(
       user: LoginPage.userLogged,
       book: ReviewsPage.book,
@@ -672,7 +671,7 @@ class ReviewsPageState extends State<ReviewsPage> {
       comment: commentController.text,
       images: paths,
     );
-    print(imageFiles.length);
+
     Model.sharedInstance.saveReview(review, imageFiles).then((value) {
       if(value !=  null){
         showPopop(context, "Salvataggio recensione eseguito!",title: "Attenzione:");

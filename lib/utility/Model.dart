@@ -93,12 +93,14 @@ class Model {
     }
   }*/
 
-  void saveProva(PlatformFile files) {
-    return _restManager.makePostMultiPartRequestProva(Constants.ADDRESS_STORE_SERVER, "/reviews/prova", files);
-  }
-
   Future<Review> saveReview(Review review, List<PlatformFile> files) async {
-    return await _restManager.makePostMultiPartRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_REVIEW_SAVE, review, files);
+    Map<String,String> params = {};
+    params['jsonReview'] = jsonEncode(review);
+    List<Uint8List> jsonFiles=[];
+    for(PlatformFile file in files) {
+      jsonFiles.add(file.bytes);
+    }
+    return Review.fromJson(jsonDecode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_REVIEW_SAVE, jsonFiles, param: params)));
   }
 
   Future<List<Review>> searchReviews({Book book, User user, int starNumber=-1, String keyword=""}) async {

@@ -1,5 +1,7 @@
+import 'dart:html';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart';
 
@@ -100,11 +102,26 @@ class RestManager {
     return _makeRequest(serverAddress, servicePath, "delete", type, value: value);
   }
 
-  void makePostMultiPartRequestProva(String serverAddress, String servicePath, PlatformFile files){
+  void makePostMultiPartRequestProva(String serverAddress, String servicePath, List<PlatformFile> files){
     Uri uri = Uri.http(serverAddress, servicePath);
-    MultipartRequest request = MultipartRequest('POST', uri);
+    Map<String, String> headers = {};
+    headers[HttpHeaders.contentTypeHeader] = "application/json";
+
+    List<Uint8List> fil=[];
+    for(PlatformFile x in files) {
+      fil.add(x.bytes);
+    }
+    String jsonFile = jsonEncode(fil);
+    post(uri, headers:headers, body: jsonFile);
+    /*MultipartRequest request = MultipartRequest('POST', uri);
+    Map<String, String> headers = {};
+    headers[HttpHeaders.contentTypeHeader] = "multipart/form-data";
+    request.headers.addAll(headers);
     request.files.add(MultipartFile.fromBytes("file", files.bytes));
-    request.send();
+    print(request.toString());
+    print(request.headers);
+    print(request.files.first.toString());
+    request.send();*/
   }
 
   Future<Review> makePostMultiPartRequest(String serverAddress, String servicePath, Review review, List<PlatformFile> files, {TypeHeader type = TypeHeader.json}) async {

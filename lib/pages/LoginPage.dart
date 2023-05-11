@@ -81,7 +81,7 @@ class LoginPageState extends State<LoginPage>{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Logo(color: Colors.indigoAccent),
-                              const Text("Welcome Back,",
+                              const Text("Bentornato,",
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontFamily: 'Urbanist',
@@ -102,7 +102,7 @@ class LoginPageState extends State<LoginPage>{
                                         color: Colors.black54
                                     ),
                                     labelText: 'Email Address',
-                                    hintText: 'Enter your email here...',
+                                    hintText: 'Inserisci qui la tua email ...',
                                     hintStyle: const TextStyle(
                                         color: Colors.black54
                                     ),
@@ -151,7 +151,7 @@ class LoginPageState extends State<LoginPage>{
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text("Don't you have an Account?",
+                                    const Text("Non hai un'Account?",
                                       style: TextStyle(
                                           color: Colors.black54,
                                           fontWeight: FontWeight.bold,
@@ -165,7 +165,7 @@ class LoginPageState extends State<LoginPage>{
                                         passwordController.clear();
                                         logging = !logging;
                                       }),
-                                      child: const Text("Create Account",
+                                      child: const Text("Crea Account",
                                         style: TextStyle(
                                             color: Colors.indigoAccent,
                                             fontWeight: FontWeight.bold,
@@ -221,7 +221,7 @@ class LoginPageState extends State<LoginPage>{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Logo(color: Colors.indigoAccent),
-                              const Text("Welcome Back,",
+                              const Text("Benvenuto,",
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontFamily: 'Urbanist',
@@ -241,8 +241,8 @@ class LoginPageState extends State<LoginPage>{
                                     labelStyle: const TextStyle(
                                         color: Colors.black54
                                     ),
-                                    labelText: 'Name',
-                                    hintText: 'Enter your name here...',
+                                    labelText: 'Nome',
+                                    hintText: 'Inserisci qui il tuo nome...',
                                     hintStyle: const TextStyle(
                                         color: Colors.black54
                                     ),
@@ -278,8 +278,8 @@ class LoginPageState extends State<LoginPage>{
                                     labelStyle: const TextStyle(
                                         color: Colors.black54
                                     ),
-                                    labelText: 'Surname',
-                                    hintText: 'Enter your surname here...',
+                                    labelText: 'Cognome',
+                                    hintText: 'Inserisci qui il tuo cognome...',
                                     hintStyle: const TextStyle(
                                         color: Colors.black54
                                     ),
@@ -316,7 +316,7 @@ class LoginPageState extends State<LoginPage>{
                                         color: Colors.black54
                                     ),
                                     labelText: 'Email Address',
-                                    hintText: 'Enter your email here...',
+                                    hintText: 'Inserisci qui la tua email...',
                                     hintStyle: const TextStyle(
                                         color: Colors.black54
                                     ),
@@ -349,7 +349,7 @@ class LoginPageState extends State<LoginPage>{
                                     padding: const EdgeInsets.fromLTRB(30,10,30,10),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                     fillColor: Colors.indigo,
-                                    child: const Text("SignUp",
+                                    child: const Text("Registrati",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -365,7 +365,7 @@ class LoginPageState extends State<LoginPage>{
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text("Do you already have an Account?",
+                                    const Text("Hai già un'Account?",
                                       style: TextStyle(
                                           color: Colors.black54,
                                           fontWeight: FontWeight.bold,
@@ -416,7 +416,7 @@ class LoginPageState extends State<LoginPage>{
               color: Colors.black54,
             ),
             labelText: 'Password',
-            hintText: 'Enter your password here...',
+            hintText: 'Inserisci qui la tua password...',
             hintStyle: const TextStyle(
                 color: Colors.black54
             ),

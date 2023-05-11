@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                                       labelStyle: const TextStyle(
                                           color: Colors.white
                                       ),
-                                      hintText: 'Search your Book here...',
+                                      hintText: 'Cerca qui il tuo Libro...',
                                       hintStyle: const TextStyle(
                                           color: Colors.black54
                                       ),
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: const EdgeInsets.fromLTRB(30,10,30,10),
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                       fillColor: Colors.indigo,
-                                      child: const Text("Search",
+                                      child: const Text("Cerca",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
