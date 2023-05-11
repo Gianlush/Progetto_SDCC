@@ -28,7 +28,7 @@ public class Review {
     private User user;
 
     @Basic
-    @JoinColumn(name = "comment")
+    @Column(name = "comment")
     private String comment;
 
     @Basic

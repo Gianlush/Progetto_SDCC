@@ -10,13 +10,21 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    List<Book> findBookByAuthorIn(List<String> authors);
+    List<Book> findBookByAuthorInAndNameContainingIgnoreCase(List<String> authors, String name);
 
-    List<Book> findBookByAgeIn(List<String> ages);
+    List<Book> findBookByAgeInAndNameContainingIgnoreCase(List<String> ages, String name);
 
-    List<Book> findBookByGenreIn(List<String> genres);
+    List<Book> findBookByGenreInAndNameContainingIgnoreCase(List<String> genres, String name);
 
     List<Book> findBookByNameContainsIgnoreCase(String name);
+
+    List<Book> findBookByNameContainsIgnoreCaseAndGenreInAndAuthorInAndAgeIn(String name, List<String> genres, List<String> authors, List<String> ages);
+
+    List<Book> findBookByNameContainsIgnoreCaseAndGenreInAndAuthorIn(String name, List<String> genres, List<String> authors);
+
+    List<Book> findBookByNameContainsIgnoreCaseAndGenreInAndAgeIn(String name, List<String> genres, List<String> ages);
+    List<Book> findBookByNameContainsIgnoreCaseAndAuthorInAndAgeIn(String name, List<String> authors, List<String> ages);
+
 
 
 }

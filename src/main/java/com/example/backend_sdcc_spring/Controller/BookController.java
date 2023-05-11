@@ -2,6 +2,7 @@ package com.example.backend_sdcc_spring.Controller;
 
 import com.example.backend_sdcc_spring.entities.Book;
 import com.example.backend_sdcc_spring.services.BookService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,16 @@ public class BookController {
     private BookService bookService;
 
 
-    @GetMapping()
-    public List<Book> getByName(String name){
-        return bookService.showAllBookByNameContaining(name);
+    @PostMapping()
+    public List<Book> getByName(@RequestParam String name, String listAges, String listGenres, String listAuthors){
+        try {
+            return bookService.showAllBook(name, listAges, listGenres, listAuthors);
+        } catch (JsonProcessingException e) {
+            System.out.println("exception JSON book controller");
+            throw new RuntimeException(e);
+        }
     }
-
+/*
     @PostMapping("/authors")
     public List<Book> getByAuthorsIn(@RequestBody List<String> authors){
         return bookService.showAllBookByAuthorsIn(authors);
@@ -33,6 +39,6 @@ public class BookController {
     @PostMapping("/age")
     public List<Book> getByAgeInAgeIn(@RequestBody List<String> age){
         return bookService.showAllBookByInAgeIn(age);
-    }
+    }*/
 
 }
