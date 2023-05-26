@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwebapp_reload_detector/flutterwebapp_reload_detector.dart';
 import 'package:frontend_sdcc_flutter/object/Book.dart';
 import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
 import 'package:frontend_sdcc_flutter/widget/BookCover.dart';
-import '../object/User.dart';
+
 import '../utility/Model.dart';
 import '../widget/Logo.dart';
 

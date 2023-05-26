@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 showPopop(BuildContext context, String message, {String title="Errore:"}) {

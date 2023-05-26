@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sdcc_flutter/pages/HomePage.dart';
 import 'package:frontend_sdcc_flutter/pages/LoginPage.dart';
-import 'package:frontend_sdcc_flutter/pages/ReviewsPage.dart';
 
 void main() {
   runApp(const MyApp());

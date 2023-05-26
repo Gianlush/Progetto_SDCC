@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+
+import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:frontend_sdcc_flutter/utility/Constants.dart';
 import 'package:frontend_sdcc_flutter/utility/RestManager.dart';
-import 'package:crypto/crypto.dart';
-import 'package:http/http.dart';
+
 import '../object/Book.dart';
 import '../object/Review.dart';
 import '../object/User.dart';
