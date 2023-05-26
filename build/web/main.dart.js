@@ -81675,7 +81675,7 @@ A.aa4.prototype={
 $2(a,b){return B.ph},
 $S:469}
 A.aa3.prototype={
-$1(a){var s=null,r=B.c.R("asset/images/reviews/",A.vc(B.fu,a,B.X,!1)),q=new A.kt(A.awq(s,s,new A.lF(r,s,s)),200,200,s)
+$1(a){var s=null,r=B.c.R("assets/images/reviews/",A.vc(B.fu,a,B.X,!1)),q=new A.kt(A.awq(s,s,new A.lF(r,s,s)),200,200,s)
 return A.mf(!1,s,!0,q,s,!0,s,s,s,s,s,s,s,s,s,new A.aa2(this.a,q),s,s,s,s)},
 $S:470}
 A.aa2.prototype={

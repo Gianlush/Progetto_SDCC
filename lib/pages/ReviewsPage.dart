@@ -585,7 +585,7 @@ class ReviewsPageState extends State<ReviewsPage> {
                 runSpacing: 7,
                 spacing: 10,
                 children: review.images.split(",").map((String key) {
-                  Image image = Image.asset("asset/images/reviews/" + Uri.encodeFull(key), width: 200, height: 200);
+                  Image image = Image.asset("assets/images/reviews/" + Uri.encodeFull(key), width: 200, height: 200);
                   return InkWell(
                     onTap: () {
                       showImageViewer(context,image.image,swipeDismissible: true,immersive: false);
