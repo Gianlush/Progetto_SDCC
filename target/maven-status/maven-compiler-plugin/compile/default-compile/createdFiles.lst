@@ -1,0 +1,14 @@
+com\example\backend_sdcc_spring\repositories\UserRepository.class
+com\example\backend_sdcc_spring\repositories\BookRepository.class
+com\example\backend_sdcc_spring\repositories\ReviewRepository.class
+com\example\backend_sdcc_spring\Controller\BookController.class
+com\example\backend_sdcc_spring\services\BookService.class
+com\example\backend_sdcc_spring\Controller\UserController.class
+com\example\backend_sdcc_spring\entities\Book.class
+com\example\backend_sdcc_spring\Controller\ReviewController.class
+com\example\backend_sdcc_spring\entities\Review.class
+com\example\backend_sdcc_spring\services\ReviewService.class
+com\example\backend_sdcc_spring\entities\User.class
+com\example\backend_sdcc_spring\services\UserService.class
+com\example\backend_sdcc_spring\BackendSdccSpringApplication.class
+com\example\backend_sdcc_spring\configurations\SecurityConfiguration.class
