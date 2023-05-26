@@ -34,7 +34,7 @@ class BookCover extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
               child: Image(
-                image: AssetImage('images/cover/$image.jpg'),
+                image: AssetImage('assets/images/cover/$image.jpg'),
                 width: 140*proportion,
                 height: 180*proportion,
               ),

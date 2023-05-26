@@ -20,7 +20,7 @@ class Logo extends StatelessWidget{
               )
           ),
           const Image(
-            image: AssetImage('images/logo.png'),
+            image: AssetImage('assets/images/logo.png'),
             width: 100,
             height: 100,
           )

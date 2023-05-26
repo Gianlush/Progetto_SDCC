@@ -53,13 +53,11 @@ class LoginPageState extends State<LoginPage>{
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 1,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: Image.asset(
-                  'assets/images/background.jpg',
-                ).image,
+                image: AssetImage('assets/images/background.jpg'),
               ),
             ),
             child: Column(
@@ -193,13 +191,11 @@ class LoginPageState extends State<LoginPage>{
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 1,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: Image.asset(
-                  'assets/images/background.jpg',
-                ).image,
+                image: AssetImage('assets/images/background.jpg'),
               ),
             ),
             child: Column(

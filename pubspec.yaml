@@ -40,6 +40,8 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/cover/
+    - assets/images/reviews/
 
 
   fonts:
