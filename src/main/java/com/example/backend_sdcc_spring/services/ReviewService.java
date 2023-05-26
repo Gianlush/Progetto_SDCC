@@ -19,7 +19,15 @@ public class ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
-    private String path = "C:/Users/Gianluca/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/reviews/";
+
+    //versione progetto in locale su PC fisso
+    //private String path = "C:/Users/Gianluca/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/reviews/";
+
+    //versione progetto in locale su PC portatile
+    //private String path = "C:/Users/gianl/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/reviews/";
+
+    //versione progetto in cloud su O.S. linux (server nginx)
+    private String path = "/var/www/my_library/web/assets/assets/images/reviews/";
 
     @Transactional
     public Review saveReview(String jsonReview, String jsonFiles) throws JsonProcessingException {
