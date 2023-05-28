@@ -13,9 +13,9 @@ class Constants{
 
   static const String ADDRESS_AUTHENTICATION_SERVER = "localhost:8080";
   //versione progetto in locale
-  //static const String ADDRESS_STORE_SERVER = "localhost:8081";
+  static const String ADDRESS_STORE_SERVER = "localhost:8081";
   //versione progetto in Cloud
-  static const String ADDRESS_STORE_SERVER = "51.120.0.147:8081";
+  //static const String ADDRESS_STORE_SERVER = "51.120.0.147:8081";
 
   static const String REQUEST_LOGIN = "/user/login";
   static const String REQUEST_SIGNUP = "/user/register";

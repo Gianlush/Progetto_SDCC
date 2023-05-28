@@ -81741,7 +81741,7 @@ p=4
 h=A
 g=B.a8
 s=7
-return A.a3(n.a.Fh("localhost:8081","/user/login",j,B.hl),$async$xQ)
+return A.a3(n.a.Fh("51.120.0.147:8081","/user/login",j,B.hl),$async$xQ)
 case 7:k=h.asb(g.kj(0,d,null))
 q=k
 s=1
@@ -81770,7 +81770,7 @@ s=p}while(true)switch(s){case 0:p=4
 i=A
 h=B.a8
 s=7
-return A.a3(n.a.RA("localhost:8081","/user/register",a),$async$uk)
+return A.a3(n.a.RA("51.120.0.147:8081","/user/register",a),$async$uk)
 case 7:l=i.asb(h.kj(0,c,null))
 q=l
 s=1
@@ -81807,7 +81807,7 @@ g=J
 f=J
 e=B.a8
 s=7
-return A.a3(n.a.Fh("localhost:8081","/books",j,B.hl),$async$u8)
+return A.a3(n.a.Fh("51.120.0.147:8081","/books",j,B.hl),$async$u8)
 case 7:k=h.dP(g.nI(f.vt(e.dT(0,a1),new A.a6n())),!0,t.pz)
 q=k
 s=1
@@ -81840,7 +81840,7 @@ for(m=b.length,n=0;n<b.length;b.length===m||(0,A.O)(b),++n)o.push(b[n].c)
 k=A
 j=B.a8
 s=3
-return A.a3(p.a.xS("localhost:8081","/reviews/save",o,l),$async$u6)
+return A.a3(p.a.xS("51.120.0.147:8081","/reviews/save",o,l),$async$u6)
 case 3:q=k.A8(j.kj(0,d,null))
 s=1
 break
@@ -81864,7 +81864,7 @@ d=J
 c=J
 b=B.a8
 s=9
-return A.a3(n.a.Fh("localhost:8081","/reviews/own",m,B.hl),$async$j0)
+return A.a3(n.a.Fh("51.120.0.147:8081","/reviews/own",m,B.hl),$async$j0)
 case 9:h=e.dP(d.nI(c.vt(b.kj(0,a4,null),new A.a6o())),!0,t.rb)
 q=h
 s=1
@@ -81877,7 +81877,7 @@ d=J
 c=J
 b=B.a8
 s=12
-return A.a3(n.a.RA("localhost:8081","/reviews/all",a),$async$j0)
+return A.a3(n.a.RA("51.120.0.147:8081","/reviews/all",a),$async$j0)
 case 12:h=e.dP(d.nI(c.vt(b.kj(0,a4,null),new A.a6p())),!0,t.rb)
 q=h
 s=1
@@ -81892,7 +81892,7 @@ d=J
 c=J
 b=B.a8
 s=15
-return A.a3(n.a.xS("localhost:8081","/reviews/keyword",a,l),$async$j0)
+return A.a3(n.a.xS("51.120.0.147:8081","/reviews/keyword",a,l),$async$j0)
 case 15:h=e.dP(d.nI(c.vt(b.kj(0,a4,null),new A.a6q())),!0,t.rb)
 q=h
 s=1
@@ -81907,7 +81907,7 @@ d=J
 c=J
 b=B.a8
 s=18
-return A.a3(n.a.xS("localhost:8081","/reviews/star",a,k),$async$j0)
+return A.a3(n.a.xS("51.120.0.147:8081","/reviews/star",a,k),$async$j0)
 case 18:h=e.dP(d.nI(c.vt(b.kj(0,a4,null),new A.a6r())),!0,t.rb)
 q=h
 s=1
@@ -81921,7 +81921,7 @@ d=J
 c=J
 b=B.a8
 s=19
-return A.a3(n.a.xS("localhost:8081","/reviews/star_keyword",a,j),$async$j0)
+return A.a3(n.a.xS("51.120.0.147:8081","/reviews/star_keyword",a,j),$async$j0)
 case 19:h=e.dP(d.nI(c.vt(b.kj(0,a4,null),new A.a6s())),!0,t.rb)
 q=h
 s=1

@@ -647,10 +647,8 @@ class ReviewsPageState extends State<ReviewsPage> {
         }
 
       }
-      //List<Image> files = imageFiles.map((file) => Image.memory(file.bytes)).toList();
       setState(() {
         imageFiles.addAll(result.files);
-        //images.addAll(files);
       });
     } catch (e){
       print("------ Pick file annullato");

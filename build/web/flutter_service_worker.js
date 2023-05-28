@@ -59,7 +59,7 @@ const RESOURCES = {
 "assets/assets/images/reviews/serieInfernaleIMAGE.jpg": "e7c8ad6e95d03666bdf5d0354e0f60f5",
 "assets/FontManifest.json": "848dcd580c80116c346cbe0ab9f89c2f",
 "assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
-"assets/NOTICES": "bae80a549e2221147df41d2463ae100b",
+"assets/NOTICES": "1715924bb55eb81dbfa14ec3e2b6d275",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "canvaskit/canvaskit.js": "97937cb4c2c2073c968525a3e08c86a3",
 "canvaskit/canvaskit.wasm": "3de12d898ec208a5f31362cc00f09b9e",
@@ -71,9 +71,9 @@ const RESOURCES = {
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "68fe27a880c1d0f87d28106e458824ca",
-"/": "68fe27a880c1d0f87d28106e458824ca",
-"main.dart.js": "70de0f5c461f705e6254cb53ba0d0fd0",
+"index.html": "880d21ed54c51603e17bfbd98f9d21e8",
+"/": "880d21ed54c51603e17bfbd98f9d21e8",
+"main.dart.js": "c97a0ee87839488150e7eba31a0c9cb9",
 "manifest.json": "45435c20212fde7f9867279222bfc3bf",
 "version.json": "972a7faa7b69f0c686eb55529131f498"
 };

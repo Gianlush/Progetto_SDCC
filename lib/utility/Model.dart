@@ -57,43 +57,6 @@ class Model {
     }
   }
 
-/*  Future<List<Book>> searchBookByAuthorsIn({List<String> authors = const <String>[], String name, }) async {
-    Map<String, String> params = {};
-    params["name"] = name;
-    try {
-      return List<Book>.from(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_AUTHORS, authors, param: params)).map((i) => Book.fromJson(i)).toList());
-    }
-    catch (e) {
-      print(e);
-      return null; // not the best solution
-    }
-  }
-
-  Future<List<Book>> searchBookByAge({List<String> ages, String name}) async {
-    Map<String, String> params = {};
-    params["name"] = name;
-    try {
-      return List<Book>.from(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_AGE, ages, param: params)).map((i) => Book.fromJson(i)).toList());
-    }
-    catch (e) {
-      print(e);
-      return null; // not the best solution
-    }
-  }
-
-
-  Future<List<Book>> searchBookByGenresIn({List<String> genres = const <String>[], String name}) async {
-    Map<String, String> params = {};
-    params["name"] = name;
-    try {
-      return List<Book>.from(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_BOOK_BY_GENRES, genres, param: params)).map((i) => Book.fromJson(i)).toList());
-    }
-    catch (e) {
-      print(e);
-      return null; // not the best solution
-    }
-  }*/
-
   Future<Review> saveReview(Review review, List<PlatformFile> files) async {
     Map<String,String> params = {};
     params['jsonReview'] = jsonEncode(review);
