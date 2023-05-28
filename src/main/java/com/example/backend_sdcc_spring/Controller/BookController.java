@@ -28,20 +28,5 @@ public class BookController {
             throw new RuntimeException(e);
         }
     }
-/*
-    @PostMapping("/authors")
-    public List<Book> getByAuthorsIn(@RequestBody List<String> authors){
-        return bookService.showAllBookByAuthorsIn(authors);
-    }
-
-    @PostMapping("/genres")
-    public List<Book> getByGenresIn(@RequestBody List<String> genres){
-        return bookService.showAllBookByGenresIn(genres);
-    }
-
-    @PostMapping("/age")
-    public List<Book> getByAgeInAgeIn(@RequestBody List<String> age){
-        return bookService.showAllBookByInAgeIn(age);
-    }*/
 
 }

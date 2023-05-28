@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
     public User showUserByPassword(String email, String hashedPassword) {
         return userRepository.findUserByEmailAndPassword(email, hashedPassword);
     }

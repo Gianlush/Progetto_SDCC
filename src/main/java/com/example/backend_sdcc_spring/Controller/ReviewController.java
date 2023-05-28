@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping(value = "/reviews", produces = "application/json;charset=UTF-8")
 public class ReviewController {
     
     @Autowired
     private ReviewService reviewService;
 
-    @PostMapping(value = "/own", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/own")
     public List<Review> getByUserAndBook(int idUser, int idBook){
         return reviewService.showByUserAndBook(idUser,idBook);
     }
 
-    @PostMapping(value = "/save",produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/save")
     public Review saveReview(@RequestParam String jsonReview, @RequestBody String jsonFiles) {
         try {
             return reviewService.saveReview(jsonReview, jsonFiles);
@@ -31,25 +31,22 @@ public class ReviewController {
         }
     }
 
-
-    @PostMapping(value = "/all", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/all")
     public List<Review> getAllByBook(@RequestBody Book book){
         return reviewService.showAllByBook(book);
     }
 
-    @PostMapping(value = "/keyword", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/keyword")
     public List<Review> getAllByBookAndCommentContaining(@RequestBody Book book, @RequestParam String keyword){
         return reviewService.showAllByBookAndCommentContaining(book, keyword);
     }
 
-
-    @PostMapping(value = "/star", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/star")
     public List<Review> getAllByBookAndStarNumber(@RequestBody Book book, @RequestParam int starNumber){
         return reviewService.showAllByBookAndStarNumber(book, starNumber);
     }
 
-
-    @PostMapping(value = "/star_keyword", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/star_keyword")
     public List<Review> getAllByBookAndStarNumberAndCommentContaining(@RequestBody Book book, @RequestParam int starNumber, @RequestParam String keyword){
         return reviewService.showAllByBookAndStarNumberAndCommentContaining(book,starNumber,keyword);
     }

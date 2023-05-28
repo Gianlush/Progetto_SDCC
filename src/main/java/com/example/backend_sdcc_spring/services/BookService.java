@@ -26,7 +26,6 @@ public class BookService {
             ages.add("Per adulti (18+)");
         }
 
-
         if(!ages.isEmpty() && !authors.isEmpty() && !genres.isEmpty())
             return bookRepository.findBookByNameContainsIgnoreCaseAndGenreInAndAuthorInAndAgeIn(name, genres, authors, ages);
         if(!ages.isEmpty() && !authors.isEmpty())
@@ -43,20 +42,4 @@ public class BookService {
             return bookRepository.findBookByAuthorInAndNameContainingIgnoreCase(authors, name);
         return bookRepository.findBookByNameContainsIgnoreCase(name);
     }
-
-/*    public List<Book> showAllBookByNameContaining(String name){
-        return bookRepository.findBookByNameContainsIgnoreCase(name);
-    }
-
-    public List<Book> showAllBookByAuthorsIn(List<String> authors){
-        return bookRepository.findBookByAuthorIn(authors);
-    }
-
-    public List<Book> showAllBookByGenresIn(List<String> genres){
-        return bookRepository.findBookByGenreIn(genres);
-    }
-
-    public List<Book> showAllBookByInAgeIn(List<String> ages){
-        return bookRepository.findBookByAgeIn(ages);
-    }*/
 }

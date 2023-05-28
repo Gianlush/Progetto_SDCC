@@ -21,13 +21,13 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     //versione progetto in locale su PC fisso
-    //private String path = "C:/Users/Gianluca/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/reviews/";
+    private final String path = "C:/Users/Gianluca/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/reviews/";
 
     //versione progetto in locale su PC portatile
     //private String path = "C:/Users/gianl/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/reviews/";
 
     //versione progetto in cloud su O.S. linux (server nginx)
-    private String path = "/var/www/my_library/web/assets/assets/images/reviews/";
+    //private String path = "/var/www/my_library/web/assets/assets/images/reviews/";
 
     @Transactional
     public Review saveReview(String jsonReview, String jsonFiles) throws JsonProcessingException {
@@ -73,22 +73,4 @@ public class ReviewService {
     public List<Review> showAllByBookAndStarNumberAndCommentContaining(Book book, int starNumber, String keyword){
         return reviewRepository.findAllByBookAndStarNumberAndCommentContainingOrderByStarNumberDesc(book,starNumber,keyword);
     }
-
-
-/*    public void save(){
-        reviewRepository.save(review);
-
-        if(files!=null)
-            try {
-                String[] names = review.getImages().split(",");
-                for (int i = 0; i < files.size(); i++) {
-                    //String path = "C:/Users/Gianluca/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/file" + file.getOriginalFilename() + ".jpg";
-                    File file = new File("C:/Users/Gianluca/Documents/IdeaProjects/Frontend_SDCC_Flutter/assets/images/reviews/"+ names[i]);
-                    files.get(i).transferTo(file);
-                }
-            } catch (IOException e) {
-                System.out.println("IO exception in: service save review");
-                throw new RuntimeException(e);
-            }
-    }*/
 }
