@@ -1,4 +1,4 @@
-package com.example.backend_sdcc_spring.Controller;
+package com.example.backend_sdcc_spring.controllers;
 import com.example.backend_sdcc_spring.entities.User;
 import com.example.backend_sdcc_spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

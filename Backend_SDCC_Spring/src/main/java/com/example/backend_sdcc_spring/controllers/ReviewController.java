@@ -1,4 +1,4 @@
-package com.example.backend_sdcc_spring.Controller;
+package com.example.backend_sdcc_spring.controllers;
 
 import com.example.backend_sdcc_spring.entities.Book;
 import com.example.backend_sdcc_spring.entities.Review;
